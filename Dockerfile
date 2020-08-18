@@ -36,6 +36,4 @@ COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/eshop ./
 
 ENV HOME=/app
 
-COPY run.sh ./
-
-ENTRYPOINT sh run.sh
+CMD bin/eshop eval "Eshop.Release.migrate" && bin/eshop start
