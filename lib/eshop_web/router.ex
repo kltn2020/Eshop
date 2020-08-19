@@ -23,14 +23,16 @@ defmodule EshopWeb.Router do
     post "/login", Auth.UserLogin, :login
   end
 
-  scope "/api/home", EshopWeb.Controllers do
-    pipe_through [:api, :api_protected]
-
-    get "/profile", Home, :home
-  end
-
   scope "/api/admin", EshopWeb.Controllers do
     pipe_through [:api, :api_protected, :admin_protected]
+
+    get("/categories", Ecom.CategoryController, :index)
+  end
+
+  scope "/api", EshopWeb.Controllers do
+    pipe_through [:api, :api_protected]
+
+    get "/home/profile", Home, :home
   end
 
   if Mix.env() in [:dev, :test] do
