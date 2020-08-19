@@ -12,6 +12,10 @@ defmodule EshopWeb.Router do
       error_handler: EshopWeb.AuthErrorHandler
   end
 
+  pipeline :admin_protected do
+    plug EshopWeb.Plug.EnsureAdmin
+  end
+
   scope "/api/auth", EshopWeb.Controllers do
     pipe_through :api
 
@@ -23,6 +27,10 @@ defmodule EshopWeb.Router do
     pipe_through [:api, :api_protected]
 
     get "/profile", Home, :home
+  end
+
+  scope "/api/admin", EshopWeb.Controllers do
+    pipe_through [:api, :api_protected, :admin_protected]
   end
 
   if Mix.env() in [:dev, :test] do

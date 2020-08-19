@@ -3,6 +3,8 @@ defmodule Eshop.Identity.User do
   use Pow.Ecto.Schema
 
   schema "users" do
+    field :role, :string, default: "user"
+
     pow_user_fields()
 
     timestamps()

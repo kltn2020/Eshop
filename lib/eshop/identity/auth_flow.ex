@@ -14,6 +14,7 @@ defmodule Eshop.Identity.AuthFlow do
         conn
         |> Conn.put_private(:api_access_token, jwt_token)
         |> Conn.put_private(:user_id, claims["user_id"])
+        |> Conn.put_private(:role, claims["role"])
 
       {conn, %{"token" => jwt_token}}
     else
@@ -23,7 +24,7 @@ defmodule Eshop.Identity.AuthFlow do
 
   @impl true
   def create(conn, user, _config) do
-    claims = %{user_id: user.id, email: user.email}
+    claims = %{user_id: user.id, email: user.email, role: user.role}
     generated_token = Token.generate_and_sign!(claims)
     conn = conn |> Conn.put_private(:api_access_token, generated_token)
     {conn, user}
