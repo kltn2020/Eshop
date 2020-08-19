@@ -28,12 +28,23 @@ defmodule EshopWeb.Router do
 
     get("/categories", Ecom.CategoryController, :index)
     get("/brands", Ecom.BrandController, :index)
+
+    post("/products", Ecom.ProductController, :create)
+    put("/products/:id", Ecom.ProductController, :update)
+    delete("/products/:id", Ecom.ProductController, :delete)
   end
 
   scope "/api", EshopWeb.Controllers do
     pipe_through [:api, :api_protected]
 
     get "/home/profile", Home, :home
+  end
+
+  scope "/api", EshopWeb.Controllers do
+    pipe_through [:api]
+
+    get("/products", Ecom.ProductController, :index)
+    get("/products/:id", Ecom.ProductController, :show)
   end
 
   if Mix.env() in [:dev, :test] do

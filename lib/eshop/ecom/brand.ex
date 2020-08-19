@@ -5,5 +5,7 @@ defmodule Eshop.Ecom.Brand do
     field :name, :string
 
     timestamps()
+
+    has_many(:products, Eshop.Ecom.Product)
   end
 end
