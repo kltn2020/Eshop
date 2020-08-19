@@ -27,6 +27,7 @@ defmodule EshopWeb.Router do
     pipe_through [:api, :api_protected, :admin_protected]
 
     get("/categories", Ecom.CategoryController, :index)
+    get("/brands", Ecom.BrandController, :index)
   end
 
   scope "/api", EshopWeb.Controllers do
