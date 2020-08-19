@@ -13,6 +13,11 @@ config :eshop, EshopWeb.Endpoint,
   check_origin: false,
   watchers: []
 
+config :eshop, Eshop.Repo,
+  # ssl: true,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
