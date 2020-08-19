@@ -9,7 +9,7 @@ defmodule EshopWeb.Router do
 
   pipeline :api_protected do
     plug Pow.Plug.RequireAuthenticated,
-      error_handler: Pow.Phoenix.PlugErrorHandler
+      error_handler: EshopWeb.AuthErrorHandler
   end
 
   scope "/api/auth", EshopWeb.Controllers do
@@ -17,6 +17,12 @@ defmodule EshopWeb.Router do
 
     post "/register", Auth.UserRegistration, :register
     post "/login", Auth.UserLogin, :login
+  end
+
+  scope "/api/home", EshopWeb.Controllers do
+    pipe_through [:api, :api_protected]
+
+    get "/profile", Home, :home
   end
 
   if Mix.env() in [:dev, :test] do
