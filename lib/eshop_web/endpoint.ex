@@ -7,24 +7,14 @@ defmodule EshopWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_eshop_key",
-    signing_salt: "juMfHQPa"
+    signing_salt: "zwun0/G8"
   ]
 
   socket "/socket", EshopWeb.UserSocket,
-    websocket: [timeout: 45_000],
+    websocket: true,
     longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
-
-  # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phx.digest
-  # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/",
-    from: :eshop,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -48,5 +38,6 @@ defmodule EshopWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :eshop
   plug EshopWeb.Router
 end

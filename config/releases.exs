@@ -11,3 +11,5 @@ config :eshop, EshopWeb.Endpoint,
     transport_options: [socket_opts: [:inet6]]
   ],
   secret_key_base: System.get_env("SECRET_KEY_BASE")
+
+config :joken, default_signer: System.get_env("SECRET_JOKEN")

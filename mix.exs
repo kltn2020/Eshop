@@ -42,7 +42,11 @@ defmodule Eshop.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:pow, "~> 1.0.20"},
+      {:certifi, "~> 2.5.2"},
+      {:ssl_verify_fun, "~> 1.1.6"},
+      {:joken, "~> 2.2.0"}
     ]
   end
 
