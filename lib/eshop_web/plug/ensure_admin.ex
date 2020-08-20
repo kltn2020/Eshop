@@ -20,7 +20,7 @@ defmodule EshopWeb.Plug.EnsureAdmin do
   defp halt_plug(conn) do
     conn
     |> put_status(:unauthorized)
-    |> json(%{code: 401, message: "The user is not authenticated"})
+    |> json(%{code: 401, message: "The user is not unauthorized"})
     |> halt()
   end
 end
