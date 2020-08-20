@@ -47,7 +47,8 @@ defmodule Eshop.MixProject do
       {:certifi, "~> 2.5.2"},
       {:ssl_verify_fun, "~> 1.1.6"},
       {:joken, "~> 2.2.0"},
-      {:timex, "~> 3.5"}
+      {:timex, "~> 3.6.2"},
+      {:cloudex, "~> 1.4.1"}
     ]
   end
 

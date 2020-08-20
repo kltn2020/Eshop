@@ -38,6 +38,7 @@ defmodule EshopWeb.Router do
     pipe_through [:api, :api_protected]
 
     get "/home/profile", Home, :home
+    post("/upload", Uploader, :upload)
   end
 
   scope "/api", EshopWeb.Controllers do

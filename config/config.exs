@@ -25,4 +25,9 @@ config :eshop, :pow,
 
 config :joken, default_signer: System.get_env("SECRET_JOKEN")
 
+config :cloudex,
+  api_key: System.get_env("CLOUDEX_API_KEY"),
+  secret: System.get_env("CLOUDEX_SECRET"),
+  cloud_name: System.get_env("CLOUDEX_CLOUD_NAME")
+
 import_config "#{Mix.env()}.exs"
