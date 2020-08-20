@@ -30,6 +30,7 @@ defmodule Eshop.Ecom.Product do
     field :video, :string
     field :weight, :string
     field :wifi, :string
+    field :images, {:array, :map}
 
     timestamps()
 
@@ -37,64 +38,23 @@ defmodule Eshop.Ecom.Product do
     belongs_to(:brand, Eshop.Ecom.Brand)
   end
 
-  @doc false
+  @default_fields [
+    :id,
+    :inserted_at,
+    :updated_at
+  ]
+
+  @required_fields [
+    :sku,
+    :category_id,
+    :brand_id,
+    :images
+  ]
+
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [
-      :sku,
-      :name,
-      :price,
-      :discount,
-      :cpu,
-      :gpu,
-      :os,
-      :ram,
-      :storage,
-      :new_feature,
-      :display,
-      :display_resolution,
-      :display_screen,
-      :camera,
-      :video,
-      :wifi,
-      :bluetooth,
-      :ports,
-      :size,
-      :weight,
-      :material,
-      :battery_capacity,
-      :description,
-      :content,
-      :brand_id,
-      :category_id
-    ])
-    |> validate_required([
-      :sku,
-      :name,
-      :price,
-      :discount,
-      :cpu,
-      :gpu,
-      :os,
-      :ram,
-      :storage,
-      :new_feature,
-      :display,
-      :display_resolution,
-      :display_screen,
-      :camera,
-      :video,
-      :wifi,
-      :bluetooth,
-      :ports,
-      :size,
-      :weight,
-      :material,
-      :battery_capacity,
-      :description,
-      :content,
-      :brand_id,
-      :category_id
-    ])
+    |> cast(attrs, __MODULE__.__schema__(:fields) -- @default_fields)
+    |> validate_required(@required_fields)
+    |> unique_constraint(:sku)
   end
 end

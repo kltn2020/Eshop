@@ -18,7 +18,7 @@ defmodule Eshop.Utils.CloudinaryUploader do
     file_path
     |> Cloudex.upload(%{public_id: formated_file_name})
     |> case do
-      {:ok, upload_image} -> {:ok, upload_image.url}
+      {:ok, upload_image} -> {:ok, upload_image.secure_url}
       err -> err
     end
   end
