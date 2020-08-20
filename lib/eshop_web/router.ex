@@ -32,13 +32,14 @@ defmodule EshopWeb.Router do
     post("/products", Ecom.ProductController, :create)
     put("/products/:id", Ecom.ProductController, :update)
     delete("/products/:id", Ecom.ProductController, :delete)
+
+    post("/upload", Uploader, :upload)
   end
 
   scope "/api", EshopWeb.Controllers do
     pipe_through [:api, :api_protected]
 
     get "/home/profile", Home, :home
-    post("/upload", Uploader, :upload)
   end
 
   scope "/api", EshopWeb.Controllers do
