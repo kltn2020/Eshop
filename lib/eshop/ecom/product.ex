@@ -6,7 +6,6 @@ defmodule Eshop.Ecom.Product do
     field :battery_capacity, :string
     field :bluetooth, :string
     field :camera, :string
-    field :content, :string
     field :cpu, :string
     field :description, :string
     field :discount, :float
