@@ -1,4 +1,4 @@
-defmodule Eshop.Ecom.Category do
+defmodule EshopCore.Ecom.Category do
   use Ecto.Schema
 
   schema "categories" do
@@ -6,6 +6,6 @@ defmodule Eshop.Ecom.Category do
 
     timestamps()
 
-    has_many(:product, Eshop.Ecom.Product)
+    has_many(:product, EshopCore.Ecom.Product)
   end
 end

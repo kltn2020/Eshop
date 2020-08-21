@@ -1,10 +1,10 @@
-defmodule Eshop.Identity.AuthFlow do
+defmodule EshopCore.Identity.AuthFlow do
   use Pow.Plug.Base
 
   require Logger
 
   alias Plug.Conn
-  alias Eshop.Identity.Token
+  alias EshopCore.Identity.Token
 
   @impl true
   def fetch(conn, _config) do

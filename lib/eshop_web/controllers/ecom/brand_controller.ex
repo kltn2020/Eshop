@@ -1,7 +1,7 @@
 defmodule EshopWeb.Controllers.Ecom.BrandController do
   use EshopWeb, :controller
 
-  alias Eshop.Ecom
+  alias EshopCore.Ecom
 
   action_fallback EshopWeb.FallbackController
 

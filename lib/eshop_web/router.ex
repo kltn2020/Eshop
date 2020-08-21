@@ -4,7 +4,7 @@ defmodule EshopWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Eshop.Identity.AuthFlow, otp_app: :eshop
+    plug EshopCore.Identity.AuthFlow, otp_app: :eshop
   end
 
   pipeline :api_protected do
@@ -40,6 +40,12 @@ defmodule EshopWeb.Router do
     pipe_through [:api, :api_protected]
 
     get "/home/profile", Home, :home
+
+    get("/shopping/my-cart", Shopping.CartController, :my_cart)
+    delete("/shopping/my-cart", Shopping.CartController, :clear_my_cart)
+    post("/shopping/:product_id/increase", Shopping.CartController, :increase_item)
+    put("/shopping/:product_id/decrease", Shopping.CartController, :decrease_item)
+    delete("/shopping/:product_id/remove", Shopping.CartController, :remove_item)
   end
 
   scope "/api", EshopWeb.Controllers do

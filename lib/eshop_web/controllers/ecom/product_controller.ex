@@ -1,8 +1,8 @@
 defmodule EshopWeb.Controllers.Ecom.ProductController do
   use EshopWeb, :controller
 
-  alias Eshop.Ecom
-  alias Eshop.Ecom.Product
+  alias EshopCore.Ecom
+  alias EshopCore.Ecom.Product
 
   action_fallback EshopWeb.FallbackController
 

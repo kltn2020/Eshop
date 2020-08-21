@@ -1,8 +1,8 @@
-defmodule Eshop.Ecom do
+defmodule EshopCore.Ecom do
   import Ecto.Query, warn: false
   alias Eshop.Repo
 
-  alias Eshop.Ecom.{Category, Brand, Product}
+  alias EshopCore.Ecom.{Category, Brand, Product}
 
   def list_categories do
     Repo.all(Category)

@@ -1,4 +1,4 @@
-defmodule Eshop.Shopping.CartProduct do
+defmodule EshopCore.Shopping.CartProduct do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,8 +7,8 @@ defmodule Eshop.Shopping.CartProduct do
 
     timestamps()
 
-    belongs_to(:product, Eshop.Ecom.Product)
-    belongs_to(:cart, Eshop.Shopping.Cart)
+    belongs_to(:product, EshopCore.Ecom.Product)
+    belongs_to(:cart, EshopCore.Shopping.Cart)
   end
 
   @default_fields [

@@ -20,7 +20,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :eshop, :pow,
-  user: Eshop.Identity.User,
+  user: EshopCore.Identity.User,
   repo: Eshop.Repo
 
 config :joken, default_signer: System.get_env("SECRET_JOKEN")

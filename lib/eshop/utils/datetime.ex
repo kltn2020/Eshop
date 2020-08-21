@@ -4,7 +4,7 @@ defmodule Eshop.Utils.DateTime do
   def local_default(%DateTime{} = datetime) do
     DateTime.shift_zone!(
       datetime,
-      Eshop.Constants.get_default_timezone(),
+      Eshop.Core.Constants.get_default_timezone(),
       Tzdata.TimeZoneDatabase
     )
   end
