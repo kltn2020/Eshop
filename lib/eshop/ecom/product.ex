@@ -29,6 +29,7 @@ defmodule Eshop.Ecom.Product do
     field :video, :string
     field :weight, :string
     field :wifi, :string
+    field :is_available, :boolean
     field :images, {:array, :map}
 
     timestamps()
