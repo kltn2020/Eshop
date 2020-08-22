@@ -1,13 +1,15 @@
 defmodule EshopWeb.Shopping.CartController do
   use EshopWeb, :controller
 
+  alias Eshop.Shopping
+
   action_fallback EshopWeb.FallbackController
 
   def my_cart(conn, _params) do
     user_id = conn.private[:user_id]
 
     cart =
-      Eshop.Shopping.find_cart(user_id)
+      Shopping.find_cart(user_id)
       |> Eshop.Repo.preload(items: :product)
       |> Eshop.Utils.StructHelper.to_map()
 
@@ -18,23 +20,19 @@ defmodule EshopWeb.Shopping.CartController do
   def clear_my_cart(conn, _params) do
     user_id = conn.private[:user_id]
 
-    Eshop.Shopping.clear_my_cart(user_id)
+    cart = Shopping.find_cart(user_id)
+
+    Shopping.clear_my_cart(cart.id)
 
     conn |> json(%{status: "OK"})
   end
 
-  def increase_item(conn, %{"product_id" => product_id}) do
+  def update_quantity(conn, %{"product_id" => product_id} = params) do
     user_id = conn.private[:user_id]
 
-    Eshop.Shopping.increase_quantity_item(user_id, product_id)
+    cart = Shopping.find_cart(user_id)
 
-    conn |> json(%{status: "OK"})
-  end
-
-  def decrease_item(conn, %{"product_id" => product_id}) do
-    user_id = conn.private[:user_id]
-
-    Eshop.Shopping.decrease_quantity_item(user_id, product_id)
+    Shopping.update_quantity_cart(cart.id, product_id, params)
 
     conn |> json(%{status: "OK"})
   end

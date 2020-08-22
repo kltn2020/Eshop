@@ -43,8 +43,7 @@ defmodule EshopWeb.Router do
 
     get("/shopping/my-cart", Shopping.CartController, :my_cart)
     delete("/shopping/my-cart", Shopping.CartController, :clear_my_cart)
-    post("/shopping/:product_id/increase", Shopping.CartController, :increase_item)
-    put("/shopping/:product_id/decrease", Shopping.CartController, :decrease_item)
+    put("/shopping/:product_id", Shopping.CartController, :update_quantity)
     delete("/shopping/:product_id/remove", Shopping.CartController, :remove_item)
   end
 

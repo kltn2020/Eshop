@@ -12,12 +12,9 @@ defmodule Eshop.Shopping do
     |> Repo.insert()
   end
 
-  def get_cart_product(cart_id, product_id),
-    do: Repo.get_by(CartProduct, cart_id: cart_id, product_id: product_id)
-
-  def create_cart_product(cart_id, product_id) do
+  def create_cart_product(cart_id, product_id, quantity) do
     %CartProduct{}
-    |> CartProduct.changeset(%{cart_id: cart_id, product_id: product_id})
+    |> CartProduct.changeset(%{cart_id: cart_id, product_id: product_id, quantity: quantity})
     |> Repo.insert()
   end
 
@@ -32,7 +29,9 @@ defmodule Eshop.Shopping do
   end
 
   def find_cart(user_id) do
-    case get_cart(user_id) do
+    user = user_id |> Eshop.Identity.get_user!() |> Repo.preload(:cart)
+
+    case user.cart do
       nil ->
         {:ok, cart} = create_cart(user_id)
         cart
@@ -42,35 +41,16 @@ defmodule Eshop.Shopping do
     end
   end
 
-  defp update_quantity_cart(cart, product_id, number) do
-    case get_cart_product(cart.id, product_id) do
-      nil ->
-        number > 0 && create_cart_product(cart.id, product_id)
+  def update_quantity_cart(cart_id, product_id, attrs) do
+    from(cp in CartProduct, where: cp.product_id == ^product_id and cp.cart_id == ^cart_id)
+    |> Repo.delete_all()
 
-      cart_product ->
-        if cart_product.quantity == 1 && number == -1 do
-          delete_cart_product(cart_product)
-        else
-          update_cart_product(cart_product, %{quantity: cart_product.quantity + number})
-        end
-    end
+    quantity = attrs["quantity"]
+
+    quantity > 0 && create_cart_product(cart_id, product_id, quantity)
   end
 
-  def increase_quantity_item(user_id, product_id) do
-    cart = find_cart(user_id)
-
-    update_quantity_cart(cart, product_id, 1)
-  end
-
-  def decrease_quantity_item(user_id, product_id) do
-    cart = find_cart(user_id)
-
-    update_quantity_cart(cart, product_id, -1)
-  end
-
-  def clear_my_cart(user_id) do
-    cart = find_cart(user_id)
-
-    from(cp in CartProduct, where: cp.cart_id == ^cart.id) |> Repo.delete_all()
+  def clear_my_cart(cart_id) do
+    from(cp in CartProduct, where: cp.cart_id == ^cart_id) |> Repo.delete_all()
   end
 end
