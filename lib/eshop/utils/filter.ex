@@ -1,4 +1,4 @@
-defmodule Eshop.Core.Filter do
+defmodule Eshop.Utils.Filter do
   @moduledoc """
   Filters Ecto query results by params provided.
 

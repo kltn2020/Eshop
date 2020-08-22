@@ -1,4 +1,4 @@
-defmodule EshopWeb.Controllers.Uploader do
+defmodule EshopWeb.Uploader do
   use EshopWeb, :controller
 
   action_fallback EshopWeb.FallbackController

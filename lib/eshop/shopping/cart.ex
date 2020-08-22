@@ -1,13 +1,13 @@
-defmodule EshopCore.Shopping.Cart do
+defmodule Eshop.Shopping.Cart do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "carts" do
     timestamps()
 
-    has_many(:items, EshopCore.Shopping.CartProduct)
+    has_many(:items, Eshop.Shopping.CartProduct)
 
-    belongs_to(:customer, EshopCore.Identity.User, foreign_key: :user_id)
+    belongs_to(:customer, Eshop.Identity.User, foreign_key: :user_id)
   end
 
   @default_fields [

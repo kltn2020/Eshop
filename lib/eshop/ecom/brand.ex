@@ -1,4 +1,4 @@
-defmodule EshopCore.Ecom.Brand do
+defmodule Eshop.Ecom.Brand do
   use Ecto.Schema
 
   schema "brands" do
@@ -6,6 +6,6 @@ defmodule EshopCore.Ecom.Brand do
 
     timestamps()
 
-    has_many(:products, EshopCore.Ecom.Product)
+    has_many(:products, Eshop.Ecom.Product)
   end
 end

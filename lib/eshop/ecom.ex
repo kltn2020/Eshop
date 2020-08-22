@@ -1,8 +1,8 @@
-defmodule EshopCore.Ecom do
+defmodule Eshop.Ecom do
   import Ecto.Query, warn: false
   alias Eshop.Repo
 
-  alias EshopCore.Ecom.{Category, Brand, Product}
+  alias Eshop.Ecom.{Category, Brand, Product}
 
   def list_categories do
     Repo.all(Category)
@@ -14,8 +14,8 @@ defmodule EshopCore.Ecom do
 
   def list_products_with_paging(params) do
     from(i in Product)
-    |> Eshop.Core.Filter.apply(params)
-    |> Eshop.Core.Paginator.new(Repo, params)
+    |> Eshop.Utils.Filter.apply(params)
+    |> Eshop.Utils.Paginator.new(Repo, params)
   end
 
   def get_product!(id), do: Repo.get!(Product, id)

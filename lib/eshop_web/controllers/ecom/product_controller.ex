@@ -1,8 +1,8 @@
-defmodule EshopWeb.Controllers.Ecom.ProductController do
+defmodule EshopWeb.Ecom.ProductController do
   use EshopWeb, :controller
 
-  alias EshopCore.Ecom
-  alias EshopCore.Ecom.Product
+  alias Eshop.Ecom
+  alias Eshop.Ecom.Product
 
   action_fallback EshopWeb.FallbackController
 
@@ -33,7 +33,7 @@ defmodule EshopWeb.Controllers.Ecom.ProductController do
           message:
             changeset
             |> EshopWeb.ChangesetView.translate_errors()
-            |> Eshop.Core.Validator.get_validation_error_message()
+            |> Eshop.Utils.Validator.get_validation_error_message()
         })
     end
   end
@@ -62,7 +62,7 @@ defmodule EshopWeb.Controllers.Ecom.ProductController do
           message:
             changeset
             |> EshopWeb.ChangesetView.translate_errors()
-            |> Eshop.Core.Validator.get_validation_error_message()
+            |> Eshop.Utils.Validator.get_validation_error_message()
         })
     end
   end

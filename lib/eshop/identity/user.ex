@@ -1,4 +1,4 @@
-defmodule EshopCore.Identity.User do
+defmodule Eshop.Identity.User do
   use Ecto.Schema
   use Pow.Ecto.Schema
 
@@ -7,7 +7,7 @@ defmodule EshopCore.Identity.User do
 
     pow_user_fields()
 
-    has_one(:cart, EshopCore.Shopping.Cart)
+    has_one(:cart, Eshop.Shopping.Cart)
 
     timestamps()
   end

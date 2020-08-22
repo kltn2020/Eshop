@@ -1,6 +1,6 @@
-defmodule Eshop.Core.Paginator do
+defmodule Eshop.Utils.Paginator do
   @moduledoc """
-  Eshop.Core.Paginator
+  Eshop.Utils.Paginator
   """
   import Ecto.Query, only: [from: 2]
 
@@ -37,7 +37,7 @@ defmodule Eshop.Core.Paginator do
   def new(query, repo, params) do
     changesetz = changeset(%__MODULE__{}, params)
 
-    with {:ok, data} <- Eshop.Core.Validator.check_and_apply_changes(changesetz) do
+    with {:ok, data} <- Eshop.Utils.Validator.check_and_apply_changes(changesetz) do
       total_entries = repo.aggregate(query, :count, :id)
       offset = data.size * (data.page - 1)
       entries = from(i in query, limit: ^data.size, offset: ^offset) |> repo.all()

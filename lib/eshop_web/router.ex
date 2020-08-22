@@ -4,7 +4,7 @@ defmodule EshopWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug EshopCore.Identity.AuthFlow, otp_app: :eshop
+    plug Eshop.Identity.AuthFlow, otp_app: :eshop
   end
 
   pipeline :api_protected do
@@ -16,14 +16,14 @@ defmodule EshopWeb.Router do
     plug EshopWeb.Plug.EnsureAdmin
   end
 
-  scope "/api/auth", EshopWeb.Controllers do
+  scope "/api/auth", EshopWeb do
     pipe_through :api
 
     post "/register", Auth.UserRegistration, :register
     post "/login", Auth.UserLogin, :login
   end
 
-  scope "/api/admin", EshopWeb.Controllers do
+  scope "/api/admin", EshopWeb do
     pipe_through [:api, :api_protected, :admin_protected]
 
     get("/categories", Ecom.CategoryController, :index)
@@ -36,7 +36,7 @@ defmodule EshopWeb.Router do
     post("/upload", Uploader, :upload)
   end
 
-  scope "/api", EshopWeb.Controllers do
+  scope "/api", EshopWeb do
     pipe_through [:api, :api_protected]
 
     get "/home/profile", Home, :home
@@ -48,7 +48,7 @@ defmodule EshopWeb.Router do
     delete("/shopping/:product_id/remove", Shopping.CartController, :remove_item)
   end
 
-  scope "/api", EshopWeb.Controllers do
+  scope "/api", EshopWeb do
     pipe_through [:api]
 
     get("/products", Ecom.ProductController, :index)

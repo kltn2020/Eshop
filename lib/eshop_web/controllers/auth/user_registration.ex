@@ -1,4 +1,4 @@
-defmodule EshopWeb.Controllers.Auth.UserRegistration do
+defmodule EshopWeb.Auth.UserRegistration do
   use EshopWeb, :controller
 
   alias Ecto.Changeset

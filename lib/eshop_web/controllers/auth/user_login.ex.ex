@@ -1,4 +1,4 @@
-defmodule EshopWeb.Controllers.Auth.UserLogin do
+defmodule EshopWeb.Auth.UserLogin do
   use EshopWeb, :controller
 
   def login(conn, user_pass_login) do

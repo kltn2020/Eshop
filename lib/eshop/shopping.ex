@@ -1,8 +1,8 @@
-defmodule EshopCore.Shopping do
+defmodule Eshop.Shopping do
   import Ecto.Query, warn: false
   alias Eshop.Repo
 
-  alias EshopCore.Shopping.{Cart, CartProduct}
+  alias Eshop.Shopping.{Cart, CartProduct}
 
   def get_cart(user_id), do: Repo.get_by(Cart, user_id: user_id)
 

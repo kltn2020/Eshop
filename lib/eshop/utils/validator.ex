@@ -1,4 +1,4 @@
-defmodule Eshop.Core.Validator do
+defmodule Eshop.Utils.Validator do
   def check_and_apply_changes(form_changesets) when is_list(form_changesets) do
     Enum.reduce(form_changesets, {:ok, []}, fn
       form_changeset, {:ok, data} ->

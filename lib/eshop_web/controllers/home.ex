@@ -1,4 +1,4 @@
-defmodule EshopWeb.Controllers.Home do
+defmodule EshopWeb.Home do
   use EshopWeb, :controller
 
   def home(conn, _params) do

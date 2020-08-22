@@ -1,6 +1,6 @@
-defmodule Eshop.Core.Constants do
+defmodule Eshop.Utils.Constants do
   @moduledoc """
-  Eshop.Core.Constants
+  Eshop.Utils.Constants
   """
   def get_default_timezone, do: "Asia/Ho_Chi_Minh"
   def currency_vnd, do: "VND"

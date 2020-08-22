@@ -1,7 +1,7 @@
-defmodule EshopWeb.Controllers.Ecom.CategoryController do
+defmodule EshopWeb.Ecom.CategoryController do
   use EshopWeb, :controller
 
-  alias EshopCore.Ecom
+  alias Eshop.Ecom
 
   action_fallback EshopWeb.FallbackController
 
