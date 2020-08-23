@@ -1,6 +1,8 @@
 defmodule EshopWeb.Router do
   use EshopWeb, :router
   use Pow.Phoenix.Router
+  use Plug.ErrorHandler
+  use Sentry.PlugCapture
 
   pipeline :api do
     plug :accepts, ["json"]

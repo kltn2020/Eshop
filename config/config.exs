@@ -14,7 +14,8 @@ config :eshop, EshopWeb.Endpoint,
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  metadata: [:request_id],
+  backends: [:console, Sentry.LoggerBackend]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
@@ -29,5 +30,15 @@ config :cloudex,
   api_key: System.get_env("CLOUDEX_API_KEY"),
   secret: System.get_env("CLOUDEX_SECRET"),
   cloud_name: System.get_env("CLOUDEX_CLOUD_NAME")
+
+config :sentry,
+  dsn: {:system, "SENTRY_DSN"},
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  tags: %{
+    env: System.get_env("SENTRY_RELEASE_LEVEL")
+  },
+  included_environments: ~w(prod),
+  environment_name: Mix.env()
 
 import_config "#{Mix.env()}.exs"
