@@ -35,6 +35,12 @@ defmodule EshopWeb.Router do
     put("/products/:id", Ecom.ProductController, :update)
     delete("/products/:id", Ecom.ProductController, :delete)
 
+    post("/vouchers", Checkout.VoucherController, :create)
+    put("/vouchers/:id", Checkout.VoucherController, :update)
+    delete("/vouchers/:id", Checkout.VoucherController, :delete)
+    get("/vouchers", Checkout.VoucherController, :index)
+    get("/vouchers/:id", Checkout.VoucherController, :show)
+
     post("/upload", Uploader, :upload)
   end
 
@@ -47,6 +53,8 @@ defmodule EshopWeb.Router do
     delete("/shopping/my-cart", Shopping.CartController, :clear_my_cart)
     put("/shopping/:product_id", Shopping.CartController, :update_quantity)
     delete("/shopping/:product_id/remove", Shopping.CartController, :remove_item)
+
+    get("/vouchers/check/:code", Checkout.VoucherController, :check)
   end
 
   scope "/api", EshopWeb do
