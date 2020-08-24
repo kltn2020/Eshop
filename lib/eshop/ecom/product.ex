@@ -8,7 +8,7 @@ defmodule Eshop.Ecom.Product do
     field :camera, :string
     field :cpu, :string
     field :description, :string
-    field :discount, :float
+    field :discount_price, :integer
     field :display, :string
     field :display_resolution, :string
     field :display_screen, :string
@@ -18,7 +18,7 @@ defmodule Eshop.Ecom.Product do
     field :new_feature, :string
     field :os, :string
     field :ports, :string
-    field :price, :float
+    field :price, :integer
     field :ram, :string
     field :rating_avg, :float
     field :rating_count, :integer
