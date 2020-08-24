@@ -55,6 +55,10 @@ defmodule EshopWeb.Router do
     delete("/shopping/:product_id/remove", Shopping.CartController, :remove_item)
 
     get("/vouchers/check/:code", Checkout.VoucherController, :check)
+    get("/address", Checkout.AddressController, :index)
+    post("/address", Checkout.AddressController, :create)
+    put("/address/:id", Checkout.AddressController, :update)
+    delete("/address/:id", Checkout.AddressController, :delete)
   end
 
   scope "/api", EshopWeb do

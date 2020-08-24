@@ -8,6 +8,7 @@ defmodule Eshop.Identity.User do
     pow_user_fields()
 
     has_one(:cart, Eshop.Shopping.Cart)
+    has_many(:addresses, Eshop.Checkout.Address)
 
     timestamps()
   end
