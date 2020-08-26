@@ -42,6 +42,10 @@ defmodule EshopWeb.Router do
     get("/vouchers/:id", Checkout.VoucherController, :show)
 
     post("/upload", Uploader, :upload)
+
+    get("/orders", Checkout.OrderController, :index)
+    put("/orders/:id", Checkout.OrderController, :update)
+    get("/orders/:id", Checkout.OrderController, :show)
   end
 
   scope "/api", EshopWeb do
@@ -59,6 +63,11 @@ defmodule EshopWeb.Router do
     post("/address", Checkout.AddressController, :create)
     put("/address/:id", Checkout.AddressController, :update)
     delete("/address/:id", Checkout.AddressController, :delete)
+
+    get("/orders", Checkout.OrderController, :index)
+    post("/orders", Checkout.OrderController, :create)
+    put("/orders/:id", Checkout.OrderController, :update)
+    get("/orders/:id", Checkout.OrderController, :show)
   end
 
   scope "/api", EshopWeb do
