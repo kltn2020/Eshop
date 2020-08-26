@@ -65,7 +65,7 @@ defmodule EshopWeb.Checkout.OrderController do
   def show(conn, %{"id" => id}) do
     order =
       Checkout.get_order!(id)
-      |> Eshop.Repo.preload([:address, :user, :voucher])
+      |> Eshop.Repo.preload([:address, :user, :voucher, lines: :product])
 
     order =
       order
