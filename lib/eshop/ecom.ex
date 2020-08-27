@@ -41,15 +41,14 @@ defmodule Eshop.Ecom do
   end
 
   def list_favorite_products(user_id) do
-    product_ids =
+    subset =
       from(
         f in Favorite,
         where: f.user_id == ^user_id,
         select: f.product_id
       )
-      |> Repo.all()
 
-    from(p in Product, where: p.id in ^product_ids)
+    from(p in Product, where: p.id in subquery(subset))
     |> Repo.all()
   end
 
