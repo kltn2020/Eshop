@@ -68,6 +68,10 @@ defmodule EshopWeb.Router do
     post("/orders", Checkout.OrderController, :create)
     put("/orders/:id", Checkout.OrderController, :update)
     get("/orders/:id", Checkout.OrderController, :show)
+
+    post("/products/:product_id/like", Ecom.FavoriteController, :create)
+    delete("/products/:product_id/like", Ecom.FavoriteController, :delete)
+    get("/products/like", Ecom.FavoriteController, :index)
   end
 
   scope "/api", EshopWeb do
