@@ -46,6 +46,9 @@ defmodule EshopWeb.Router do
     get("/orders", Checkout.OrderController, :index)
     put("/orders/:id", Checkout.OrderController, :update)
     get("/orders/:id", Checkout.OrderController, :show)
+
+    delete("/reviews/:id", Rating.ReviewController, :delete)
+    get("/reviews", Rating.ReviewController, :admin_index)
   end
 
   scope "/api", EshopWeb do
@@ -72,6 +75,8 @@ defmodule EshopWeb.Router do
     post("/products/:product_id/like", Ecom.FavoriteController, :create)
     delete("/products/:product_id/like", Ecom.FavoriteController, :delete)
     get("/products/like", Ecom.FavoriteController, :index)
+    post("/products/:product_id/reviews", Rating.ReviewController, :create)
+    post("/reviews/:review_id", Rating.ReplyController, :create)
   end
 
   scope "/api", EshopWeb do
@@ -79,6 +84,7 @@ defmodule EshopWeb.Router do
 
     get("/products", Ecom.ProductController, :index)
     get("/products/:id", Ecom.ProductController, :show)
+    get("/products/:product_id/reviews", Rating.ReviewController, :index)
   end
 
   if Mix.env() in [:dev, :test] do
