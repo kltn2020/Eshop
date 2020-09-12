@@ -5,6 +5,7 @@ defmodule EshopWeb.Router do
   use Sentry.PlugCapture
 
   pipeline :api do
+    plug CORSPlug, origin: "*"
     plug :accepts, ["json"]
     plug Eshop.Identity.AuthFlow, otp_app: :eshop
   end

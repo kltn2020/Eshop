@@ -50,7 +50,8 @@ defmodule Eshop.MixProject do
       {:ssl_verify_fun, "~> 1.1.6"},
       {:joken, "~> 2.2.0"},
       {:timex, "~> 3.6.2"},
-      {:cloudex, "~> 1.4.1"}
+      {:cloudex, "~> 1.4.1"},
+      {:cors_plug, "~> 2.0"}
     ]
   end
 
