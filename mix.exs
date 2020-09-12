@@ -51,7 +51,8 @@ defmodule Eshop.MixProject do
       {:joken, "~> 2.2.0"},
       {:timex, "~> 3.6.2"},
       {:cloudex, "~> 1.4.1"},
-      {:cors_plug, "~> 2.0"}
+      {:plug, "~> 1.0"},
+      {:corsica, "~> 1.0"}
     ]
   end
 
