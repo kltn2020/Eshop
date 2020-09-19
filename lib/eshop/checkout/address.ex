@@ -5,6 +5,7 @@ defmodule Eshop.Checkout.Address do
   schema "addresses" do
     field :is_primary, :boolean, default: false
     field :locate, :string
+    field :phone_number, :string
 
     timestamps()
 
