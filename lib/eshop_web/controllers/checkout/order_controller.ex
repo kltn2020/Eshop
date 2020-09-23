@@ -33,19 +33,28 @@ defmodule EshopWeb.Checkout.OrderController do
         message: "Empty Cart"
       })
     else
-      params = Map.put(params, "user_id", user_id)
+      with params <- Map.put(params, "user_id", user_id),
+           code <- Map.get(params, "voucher_code"),
+           false <- is_nil(code),
+           voucher <- Checkout.get_voucher_by(%{code: code}),
+           false <- is_nil(voucher),
+           {:ok, order} <- Checkout.create_order(cart.id, voucher.id, params) do
+        Shopping.clear_my_cart(cart.id)
 
-      voucher_id = Map.get(params, "voucher_id")
+        order = order |> Eshop.Utils.StructHelper.to_map()
 
-      case Checkout.create_order(cart.id, voucher_id, params) do
-        {:ok, order} ->
-          Shopping.clear_my_cart(cart.id)
-
-          order = order |> Eshop.Utils.StructHelper.to_map()
-
+        conn
+        |> put_status(:ok)
+        |> json(%{status: "OK", data: order})
+      else
+        true ->
           conn
-          |> put_status(:ok)
-          |> json(%{status: "OK", data: order})
+          |> put_status(:bad_request)
+          |> json(%{
+            status: "ERROR",
+            code: "CREATE_ERROR",
+            message: "VOUCHER NOT FOUND"
+          })
 
         {:error, %Ecto.Changeset{} = changeset} ->
           conn
