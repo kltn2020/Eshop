@@ -6,7 +6,7 @@ docker rmi $(docker images -qa -f 'dangling=true')
 
 docker run -d --name eshop-backend \
   --network my-net \
-  -e DATABASE_URL=postgres://postgres:postgres@localhost:5432/eshop \
+  -e DATABASE_URL=postgres://phathdt379:password123@10.148.0.13:5432/eshop \
   -e SECRET_KEY_BASE=43HToczwEtbLIujVyC/L7syuUDAEHklOVydWoxt6Tu33IfUGT8ZaQbpVTcH5jnw8 \
   -e SECRET_JOKEN=43HToczwEtbLIujVyC/L7syuUDAEHklOVydWoxt6Tu33IfUGT8ZaQbpVTcH5jnw8 \
   -e CLOUDEX_API_KEY=141644434633821 \
