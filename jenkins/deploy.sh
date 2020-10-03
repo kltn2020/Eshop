@@ -2,8 +2,6 @@
 
 docker rm -f eshop-backend
 
-docker rmi $(docker images -qa -f 'dangling=true')
-
 docker run -d --name eshop-backend \
   --network my-net \
   -e DATABASE_URL=postgres://phathdt379:password123@10.148.0.13:5432/eshop \
