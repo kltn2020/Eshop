@@ -2,7 +2,6 @@ defmodule EshopWeb.Ecom.FavoriteController do
   use EshopWeb, :controller
 
   alias Eshop.Ecom
-  alias Eshop.Ecom.Favorite
 
   action_fallback EshopWeb.FallbackController
 

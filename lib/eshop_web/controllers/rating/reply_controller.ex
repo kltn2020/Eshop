@@ -2,7 +2,6 @@ defmodule EshopWeb.Rating.ReplyController do
   use EshopWeb, :controller
 
   alias Eshop.Rating
-  alias Eshop.Rating.Reply
 
   action_fallback EshopWeb.FallbackController
 
