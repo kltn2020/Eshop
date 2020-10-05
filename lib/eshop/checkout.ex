@@ -132,8 +132,6 @@ defmodule Eshop.Checkout do
         })
       end)
 
-    attrs = Map.put(attrs, "lines", lines)
-
     total =
       lines
       |> Enum.map(fn line -> line.total end)
@@ -144,8 +142,12 @@ defmodule Eshop.Checkout do
       |> Enum.map(fn line -> line.discount end)
       |> Enum.sum()
 
-    attrs = Map.put(attrs, "total", total)
-    attrs = Map.put(attrs, "discount", discount)
+    attrs =
+      attrs
+      |> Map.put("lines", lines)
+      |> Map.put("total", total)
+      |> Map.put("discount", discount)
+      |> Map.put("voucher_id", voucher_id)
 
     %Order{}
     |> Order.changeset(attrs)
