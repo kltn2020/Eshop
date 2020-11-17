@@ -17,6 +17,17 @@ defmodule EshopWeb.Ecom.ProductController do
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
   end
 
+  def recommend(conn, params) do
+    paging = Ecom.list_products_with_paging(params)
+
+    entries =
+      paging.entries
+      |> Eshop.Repo.preload([:category, :brand])
+      |> Eshop.Utils.StructHelper.to_map()
+
+    conn |> json(%{status: "OK", data: %{paging | entries: entries}})
+  end
+
   def create(conn, params) do
     case Ecom.create_product(params) do
       {:ok, product} ->
@@ -40,6 +51,10 @@ defmodule EshopWeb.Ecom.ProductController do
 
   def show(conn, %{"id" => id}) do
     product = Ecom.get_product!(id)
+
+    user_id = conn.private[:user_id]
+
+    Eshop.Tracking.create_user_view_product(%{product_id: id, user_id: user_id})
 
     conn |> json(%{status: "OK", data: Eshop.Utils.StructHelper.to_map(product)})
   end

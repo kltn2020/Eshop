@@ -76,12 +76,9 @@ defmodule EshopWeb.Router do
     get("/products/like", Ecom.FavoriteController, :index)
     post("/products/:product_id/reviews", Rating.ReviewController, :create)
     post("/reviews/:review_id", Rating.ReplyController, :create)
-  end
-
-  scope "/api", EshopWeb do
-    pipe_through [:api]
 
     get("/products", Ecom.ProductController, :index)
+    get("/products/recommend", Ecom.ProductController, :recommend)
     get("/products/:id", Ecom.ProductController, :show)
     get("/products/:product_id/reviews", Rating.ReviewController, :index)
   end
