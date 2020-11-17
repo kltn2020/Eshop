@@ -14,6 +14,7 @@ defmodule EshopWeb.Checkout.OrderController do
 
     entries =
       paging.entries
+      |> Eshop.Repo.preload(:voucher)
       |> Eshop.Utils.StructHelper.to_map()
 
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
@@ -41,7 +42,10 @@ defmodule EshopWeb.Checkout.OrderController do
            {:ok, order} <- Checkout.create_order(cart.id, voucher.id, params) do
         Shopping.clear_my_cart(cart.id)
 
-        order = order |> Eshop.Utils.StructHelper.to_map()
+        order =
+          order
+          |> Eshop.Repo.preload(:voucher)
+          |> Eshop.Utils.StructHelper.to_map()
 
         conn
         |> put_status(:ok)
