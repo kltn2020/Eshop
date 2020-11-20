@@ -78,7 +78,8 @@ defmodule EshopWeb.Router do
     post("/reviews/:review_id", Rating.ReplyController, :create)
 
     get("/products", Ecom.ProductController, :index)
-    get("/products/recommend", Ecom.ProductController, :recommend)
+    get("/products/content_based_recommend", Ecom.ProductController, :content_based_recommend)
+    get("/products/collaborative_recommend", Ecom.ProductController, :collaborative_recommend)
     get("/products/:id", Ecom.ProductController, :show)
     get("/products/:product_id/reviews", Rating.ReviewController, :index)
   end

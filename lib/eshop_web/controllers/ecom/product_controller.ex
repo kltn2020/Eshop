@@ -17,7 +17,18 @@ defmodule EshopWeb.Ecom.ProductController do
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
   end
 
-  def recommend(conn, params) do
+  def content_based_recommend(conn, params) do
+    paging = Ecom.list_products_with_paging(params)
+
+    entries =
+      paging.entries
+      |> Eshop.Repo.preload([:category, :brand])
+      |> Eshop.Utils.StructHelper.to_map()
+
+    conn |> json(%{status: "OK", data: %{paging | entries: entries}})
+  end
+
+  def collaborative_recommend(conn, params) do
     paging = Ecom.list_products_with_paging(params)
 
     entries =
