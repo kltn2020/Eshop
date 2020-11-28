@@ -14,9 +14,12 @@ pipeline{
             steps {
                 echo '****** Build and tag image ******'
 
-                sh './jenkins/build.sh'
+                script {
+                    docker.build DOCKER_IMAGE + ":$BUILD_NUMBER"
+                }
             }
         }
+
         stage("Deploy image docker"){
             steps {
                 echo '****** Deploy image ******'
