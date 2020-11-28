@@ -3,7 +3,7 @@ pipeline{
 
     environment {
         DOCKER_IMAGE = 'eshop-backend'
-        TAG = "${GIT_BRANCH}-${GIT_COMMIT.substring(0, 6)}-${BUILD_NUMBER}"
+        TAG = "${GIT_BRANCH.split("/")[1]}-${GIT_COMMIT.substring(0, 6)}-${BUILD_NUMBER}"
     }
 
     options {
