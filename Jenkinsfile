@@ -13,9 +13,8 @@ pipeline{
         stage("build image docker"){
             steps {
                 echo '****** Build and tag image ******'
-                echo $GIT_COMMIT
                 script {
-                    docker.build DOCKER_IMAGE + ":$BUILD_NUMBER"
+                    docker.build DOCKER_IMAGE + ":$BUILD_NUMBER:$GIT_COMMIT"
                 }
             }
         }
