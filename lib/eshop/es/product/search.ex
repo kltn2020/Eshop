@@ -20,14 +20,18 @@ defmodule Eshop.ES.Product.Search do
     }
   end
 
-  defp filter_query(%{ "search_terms" => val }) when val in [nil, ""], do: %{"match_all" => %{}}
+  defp filter_query(nil), do: %{ "match_all" => %{} }
 
   defp filter_query(params) do
-    %{
-      "bool" => %{
-        "should" => should_query(params)
+    if Map.get(params, "search_terms") in [nil, ""] do
+      filter_query(nil)
+    else
+      %{
+        "bool" => %{
+          "should" => should_query(params)
+        }
       }
-    }
+    end
   end
 
   defp should_query(params) do
