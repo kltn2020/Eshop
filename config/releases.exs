@@ -18,3 +18,17 @@ config :cloudex,
   api_key: System.get_env("CLOUDEX_API_KEY"),
   secret: System.get_env("CLOUDEX_SECRET"),
   cloud_name: System.get_env("CLOUDEX_CLOUD_NAME")
+
+config :eshop, Eshop.ES.Cluster,
+  url: System.get_env("ELASTIC_HOST"),
+  api: Elasticsearch.API.HTTP,
+  json_library: Jason,
+  indexes: %{
+    products: %{
+      settings: "priv/elasticsearch/products.json",
+      store: Eshop.ES.Product.Store,
+      sources: [Eshop.Ecom.Product],
+      bulk_page_size: 5000,
+      bulk_wait_interval: 15_000
+    }
+  }

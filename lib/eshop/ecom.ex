@@ -13,9 +13,15 @@ defmodule Eshop.Ecom do
   end
 
   def list_products_with_paging(params) do
-    from(i in Product)
-    |> Eshop.Utils.Filter.apply(params)
-    |> Eshop.Utils.Paginator.new(Repo, params)
+    with {:ok, collection} <- Eshop.ES.Product.Search.run(params),
+      product_ids <- Enum.map(collection, &(&1["_id"] |> String.to_integer())) do
+      from(
+        p in Product,
+        where: p.id in ^product_ids,
+        order_by: fragment("array_position(?::BIGINT[], id)", ^product_ids)
+      )
+      |> Eshop.Utils.Paginator.new(Repo, params)
+    end
   end
 
   def get_product!(id), do: Repo.get!(Product, id)

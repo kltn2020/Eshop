@@ -14,7 +14,8 @@ defmodule Eshop.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Eshop.PubSub},
       # Start the Endpoint (http/https)
-      EshopWeb.Endpoint
+      EshopWeb.Endpoint,
+      Eshop.ES.Cluster
       # Start a worker by calling: Eshop.Worker.start_link(arg)
       # {Eshop.Worker, arg}
     ]

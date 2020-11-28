@@ -1,13 +1,13 @@
 {
- "mappings": {
+  "mappings": {
     "properties": {
-      "name": {
-        "type": "text"
-      },
       "id": {
         "type": "text"
       },
-    "brand": {
+      "name": {
+        "type": "text"
+      },
+      "brand": {
         "type": "text"
       }
     }

@@ -41,4 +41,18 @@ config :sentry,
   included_environments: ~w(prod),
   environment_name: Mix.env()
 
+config :eshop, Eshop.ES.Cluster,
+  url: System.get_env("ELASTIC_HOST"),
+  api: Elasticsearch.API.HTTP,
+  json_library: Jason,
+  indexes: %{
+    products: %{
+      settings: "priv/elasticsearch/products.json",
+      store: Eshop.ES.Product.Store,
+      sources: [Eshop.Ecom.Product],
+      bulk_page_size: 5000,
+      bulk_wait_interval: 15_000
+    }
+  }
+
 import_config "#{Mix.env()}.exs"
