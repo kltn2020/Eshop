@@ -3,6 +3,7 @@ pipeline{
 
     environment {
         DOCKER_IMAGE = 'eshop-backend'
+        TAG = "${GIT_LOCAL_BRANCH}-${GIT_COMMIT.substring(0, 6)}-${BUILD_NUMBER}"
     }
 
     options {
@@ -14,7 +15,7 @@ pipeline{
             steps {
                 echo '****** Build and tag image ******'
                 script {
-                    docker.build DOCKER_IMAGE + ":$BUILD_NUMBER:$GIT_COMMIT"
+                    docker.build DOCKER_IMAGE + ":$TAG"
                 }
             }
         }
