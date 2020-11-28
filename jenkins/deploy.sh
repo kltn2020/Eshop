@@ -12,5 +12,6 @@ docker run -d --name eshop-backend \
   -e CLOUDEX_CLOUD_NAME=dudnown4z \
   -e CLOUDEX_CLOUD_ENV=test \
   -e SENTRY_DSN=https://de992d97744c4527a8ba64ce3d7141e9:688b0a2f41c14a6a97b533d755b71dce@o437505.ingest.sentry.io/5400205 \
+  -e ELASTIC_HOST=http://10.148.0.13:9200 \
   -p 4000:4000 \
   ${DOCKER_IMAGE}:$BUILD_NUMBER
