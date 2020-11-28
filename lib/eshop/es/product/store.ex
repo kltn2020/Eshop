@@ -21,6 +21,15 @@ defmodule Eshop.ES.Product.Store do
     result
   end
 
+  def update_product_to_es(product, action) when action in [:create, :update] do
+    product = product |> Repo.preload(@preloads)
+
+    Elasticsearch.put_document(EC, product, @index)
+  end
+
+  def update_product_to_es(product, :delete), do:
+    Elasticsearch.delete_document!(EC, product, @index)
+
   def search_products(query),
     do: Elasticsearch.post!(EC, "/#{@index}/_search/?size=1000", query)
 end

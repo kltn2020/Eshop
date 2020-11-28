@@ -11,6 +11,10 @@ defmodule Eshop.Release do
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
+  def build_index() do
+    Elasticsearch.Index.hot_swap(Eshop.ES.Cluster, "products")
+  end
+
   defp repos do
     Application.load(@app)
     Application.fetch_env!(@app, :ecto_repos)

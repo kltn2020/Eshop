@@ -3,6 +3,7 @@ defmodule EshopWeb.Ecom.ProductController do
 
   alias Eshop.Ecom
   alias Eshop.Ecom.Product
+  alias Eshop.ES.Product.Store, as: ESStore
 
   action_fallback EshopWeb.FallbackController
 
@@ -42,6 +43,8 @@ defmodule EshopWeb.Ecom.ProductController do
   def create(conn, params) do
     case Ecom.create_product(params) do
       {:ok, product} ->
+        ESStore.update_product_to_es(product, :create)
+
         conn
         |> put_status(:ok)
         |> json(%{status: "OK", data: Eshop.Utils.StructHelper.to_map(product)})
@@ -75,6 +78,7 @@ defmodule EshopWeb.Ecom.ProductController do
 
     case Ecom.update_product(product, params) do
       {:ok, product} ->
+        ESStore.update_product_to_es(product, :update)
         conn
         |> put_status(:ok)
         |> json(%{status: "OK", data: Eshop.Utils.StructHelper.to_map(product)})
@@ -97,6 +101,8 @@ defmodule EshopWeb.Ecom.ProductController do
     product = Ecom.get_product!(id)
 
     with {:ok, %Product{}} <- Ecom.delete_product(product) do
+      ESStore.update_product_to_es(product, :delete)
+
       conn |> json(%{status: "OK"})
     end
   end
