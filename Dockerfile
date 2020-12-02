@@ -33,6 +33,7 @@ RUN chown nobody:nobody /app
 USER nobody:nobody
 
 COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/eshop ./
+COPY --from=build --chown=nobody:nobody /app/priv/elasticsearch/ ./priv/elasticsearch/
 
 ENV HOME=/app
 
