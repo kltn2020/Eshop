@@ -20,6 +20,8 @@ defmodule Eshop.Application do
       # {Eshop.Worker, arg}
     ]
 
+    update_elasticsearch_config()
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Eshop.Supervisor]
@@ -31,5 +33,19 @@ defmodule Eshop.Application do
   def config_change(changed, _new, removed) do
     EshopWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp update_elasticsearch_config do
+    elastic_settings =
+      Application.get_env(:eshop, Eshop.ES.Cluster)
+      |> update_settings_file_path()
+
+    Application.put_env(:eshop, Eshop.ES.Cluster, elastic_settings)
+  end
+
+  defp update_settings_file_path(conf) do
+    path = Path.join(:code.priv_dir(:eshop), "/elasticsearch/products.json")
+
+    put_in(conf, [:indexes, :products, :settings], path)
   end
 end
