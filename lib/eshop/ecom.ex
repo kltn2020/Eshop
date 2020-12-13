@@ -4,6 +4,8 @@ defmodule Eshop.Ecom do
 
   alias Eshop.Ecom.{Category, Brand, Product, Favorite}
 
+  @filter_param_list ~w(brand_id category_id)
+
   def list_categories do
     Repo.all(Category)
   end
@@ -14,12 +16,15 @@ defmodule Eshop.Ecom do
 
   def list_products_with_paging(params) do
     with {:ok, collection} <- Eshop.ES.Product.Search.run(params),
-      product_ids <- Enum.map(collection, &(&1["_id"] |> String.to_integer())) do
+         product_ids <- Enum.map(collection, &(&1["_id"] |> String.to_integer())),
+         filter_params <- Map.take(params, @filter_param_list) do
       from(
         p in Product,
         where: p.id in ^product_ids,
-        order_by: fragment("array_position(?::BIGINT[], id)", ^product_ids)
+        order_by: fragment("array_position(?::BIGINT[], id)", ^product_ids),
+        order_by: [desc: :inserted_at]
       )
+      |> Eshop.Utils.Filter.apply(filter_params)
       |> Eshop.Utils.Paginator.new(Repo, params)
     end
   end
