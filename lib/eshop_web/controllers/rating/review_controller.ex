@@ -43,7 +43,7 @@ defmodule EshopWeb.Rating.ReviewController do
 
     entries =
       paging.entries
-      |> Eshop.Repo.preload(:replies)
+      |> Eshop.Repo.preload([:user, [replies: :user]])
       |> Eshop.Utils.StructHelper.to_map()
       |> Enum.map(fn review ->
         Map.put(
