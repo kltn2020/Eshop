@@ -29,6 +29,32 @@ defmodule Eshop.Ecom do
     end
   end
 
+  def content_based_recommend(user_id) do
+    with {:ok, res} <- Eshop.Recommender.ContentBasedRecommend.product_ids(user_id),
+         product_ids <- res.body do
+      from(
+        p in Product,
+        where: p.id in ^product_ids,
+        order_by: fragment("array_position(?::BIGINT[], id)", ^product_ids),
+        order_by: [desc: :inserted_at]
+      )
+      |> Eshop.Utils.Paginator.new(Repo, %{})
+    end
+  end
+
+  def collaborative_recommend(user_id) do
+    with {:ok, res} <- Eshop.Recommender.CollaborativeRecommend.product_ids(user_id),
+         product_ids <- res.body do
+      from(
+        p in Product,
+        where: p.id in ^product_ids,
+        order_by: fragment("array_position(?::BIGINT[], id)", ^product_ids),
+        order_by: [desc: :inserted_at]
+      )
+      |> Eshop.Utils.Paginator.new(Repo, %{})
+    end
+  end
+
   def get_product!(id), do: Repo.get!(Product, id)
 
   def create_product(attrs \\ %{}) do

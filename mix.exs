@@ -53,7 +53,8 @@ defmodule Eshop.MixProject do
       {:cloudex, "~> 1.4.1"},
       {:plug, "~> 1.0"},
       {:corsica, "~> 1.0"},
-      {:elasticsearch, "~> 1.0.0"}
+      {:elasticsearch, "~> 1.0.0"},
+      {:tesla, "~> 1.4.0"}
     ]
   end
 

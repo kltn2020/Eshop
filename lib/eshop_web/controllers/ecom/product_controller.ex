@@ -18,8 +18,9 @@ defmodule EshopWeb.Ecom.ProductController do
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
   end
 
-  def content_based_recommend(conn, params) do
-    paging = Ecom.list_products_with_paging(params)
+  def content_based_recommend(conn, _params) do
+    user_id = conn.private[:user_id]
+    paging = Ecom.content_based_recommend(user_id)
 
     entries =
       paging.entries
@@ -29,8 +30,9 @@ defmodule EshopWeb.Ecom.ProductController do
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
   end
 
-  def collaborative_recommend(conn, params) do
-    paging = Ecom.list_products_with_paging(params)
+  def collaborative_recommend(conn, _params) do
+    user_id = conn.private[:user_id]
+    paging = Ecom.collaborative_recommend(user_id)
 
     entries =
       paging.entries
@@ -79,6 +81,7 @@ defmodule EshopWeb.Ecom.ProductController do
     case Ecom.update_product(product, params) do
       {:ok, product} ->
         ESStore.update_product_to_es(product, :update)
+
         conn
         |> put_status(:ok)
         |> json(%{status: "OK", data: Eshop.Utils.StructHelper.to_map(product)})
