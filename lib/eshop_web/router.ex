@@ -82,6 +82,8 @@ defmodule EshopWeb.Router do
     get("/products/collaborative_recommend", Ecom.ProductController, :collaborative_recommend)
     get("/products/:id", Ecom.ProductController, :show)
     get("/products/:product_id/reviews", Rating.ReviewController, :index)
+
+    get("/vouchers", Checkout.VoucherController, :index)
   end
 
   if Mix.env() in [:dev, :test] do

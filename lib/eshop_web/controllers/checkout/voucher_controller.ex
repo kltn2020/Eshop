@@ -3,11 +3,13 @@ defmodule EshopWeb.Checkout.VoucherController do
 
   alias Eshop.Checkout
   alias Eshop.Checkout.Voucher
+  alias Eshop.Checkout.VoucherRepo
 
   action_fallback EshopWeb.FallbackController
 
   def index(conn, params) do
-    paging = Checkout.list_voucher_with_paging(params)
+    role = conn.private[:role]
+    paging = VoucherRepo.list_voucher_with_paging(params, role)
 
     entries =
       paging.entries

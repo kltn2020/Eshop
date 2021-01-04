@@ -34,12 +34,6 @@ defmodule Eshop.Checkout do
     Voucher.changeset(voucher, attrs)
   end
 
-  def list_voucher_with_paging(params) do
-    from(v in Voucher)
-    |> Eshop.Utils.Filter.apply(params)
-    |> Eshop.Utils.Paginator.new(Repo, params)
-  end
-
   def list_addresses(params) do
     from(address in Address, order_by: [desc: :is_primary])
     |> Eshop.Utils.Filter.apply(params)
