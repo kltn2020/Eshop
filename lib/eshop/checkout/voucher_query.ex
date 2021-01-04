@@ -13,7 +13,7 @@ defmodule Eshop.Checkout.VoucherQuery do
     |> where([v], fragment("? between ? and ?", ^now, v.valid_from, v.valid_to))
   end
 
-  def is_used(query, nil) do
+  def is_used(query) do
     query
   end
 

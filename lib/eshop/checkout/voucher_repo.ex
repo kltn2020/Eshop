@@ -4,6 +4,7 @@ defmodule Eshop.Checkout.VoucherRepo do
 
   def list_voucher_with_paging(params, "admin") do
     VoucherQuery.query()
+    |> VoucherQuery.is_used()
     |> Eshop.Utils.Filter.apply(params)
     |> Eshop.Utils.Paginator.new(Repo, params)
   end
