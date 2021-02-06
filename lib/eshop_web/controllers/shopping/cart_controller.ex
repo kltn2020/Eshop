@@ -36,4 +36,14 @@ defmodule EshopWeb.Shopping.CartController do
 
     conn |> json(%{status: "OK"})
   end
+
+  def toggle_cart_product(conn, %{"product_id" => product_id}) do
+    user_id = conn.private[:user_id]
+
+    cart = Shopping.find_cart(user_id)
+
+    Shopping.toggle_cart_product(cart.id, product_id)
+
+    conn |> json(%{status: "OK"})
+  end
 end

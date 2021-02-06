@@ -59,6 +59,7 @@ defmodule EshopWeb.Router do
     get("/shopping/my-cart", Shopping.CartController, :my_cart)
     delete("/shopping/my-cart", Shopping.CartController, :clear_my_cart)
     put("/shopping/:product_id", Shopping.CartController, :update_quantity)
+    put("/shopping/:product_id/toggle", Shopping.CartController, :toggle_cart_product)
 
     get("/vouchers/check/:code", Checkout.VoucherController, :check)
     get("/address", Checkout.AddressController, :index)

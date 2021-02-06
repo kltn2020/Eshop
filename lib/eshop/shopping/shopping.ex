@@ -24,6 +24,10 @@ defmodule Eshop.Shopping do
     |> Repo.update()
   end
 
+  def find_cart_product(cart_id, product_id) do
+    Repo.get_by(CartProduct, %{cart_id: cart_id, product_id: product_id})
+  end
+
   def delete_cart_product(%CartProduct{} = cart_product) do
     Repo.delete(cart_product)
   end
@@ -57,5 +61,11 @@ defmodule Eshop.Shopping do
       where: cp.active == true
     )
     |> Repo.delete_all()
+  end
+
+  def toggle_cart_product(cart_id, product_id) do
+    cart_product = find_cart_product(cart_id, product_id)
+
+    update_cart_product(cart_product, %{active: !cart_product.active})
   end
 end
