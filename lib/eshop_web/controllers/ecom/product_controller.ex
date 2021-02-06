@@ -18,9 +18,9 @@ defmodule EshopWeb.Ecom.ProductController do
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
   end
 
-  def content_based_recommend(conn, _params) do
+  def content_based_recommend(conn, %{"product_id" => product_id}) do
     user_id = conn.private[:user_id]
-    paging = Ecom.content_based_recommend(user_id)
+    paging = Ecom.content_based_recommend(user_id, product_id)
 
     entries =
       paging.entries
@@ -30,9 +30,9 @@ defmodule EshopWeb.Ecom.ProductController do
     conn |> json(%{status: "OK", data: %{paging | entries: entries}})
   end
 
-  def collaborative_recommend(conn, _params) do
+  def collaborative_recommend(conn, %{"product_id" => product_id}) do
     user_id = conn.private[:user_id]
-    paging = Ecom.collaborative_recommend(user_id)
+    paging = Ecom.collaborative_recommend(user_id, product_id)
 
     entries =
       paging.entries
