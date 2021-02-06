@@ -2,6 +2,7 @@ defmodule EshopWeb.Ecom.ProductController do
   use EshopWeb, :controller
 
   alias Eshop.Ecom
+  alias Eshop.Settings
   alias Eshop.Ecom.Product
   alias Eshop.ES.Product.Store, as: ESStore
 
@@ -20,7 +21,8 @@ defmodule EshopWeb.Ecom.ProductController do
 
   def content_based_recommend(conn, %{"product_id" => product_id}) do
     user_id = conn.private[:user_id]
-    paging = Ecom.content_based_recommend(user_id, product_id)
+    setting = Settings.get_setting()
+    paging = Ecom.content_based_recommend(user_id, product_id, setting.limit)
 
     entries =
       paging.entries
@@ -32,7 +34,8 @@ defmodule EshopWeb.Ecom.ProductController do
 
   def collaborative_recommend(conn, %{"product_id" => product_id}) do
     user_id = conn.private[:user_id]
-    paging = Ecom.collaborative_recommend(user_id, product_id)
+    setting = Settings.get_setting()
+    paging = Ecom.collaborative_recommend(user_id, product_id, setting.limit)
 
     entries =
       paging.entries

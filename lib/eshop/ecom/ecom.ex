@@ -29,8 +29,9 @@ defmodule Eshop.Ecom do
     end
   end
 
-  def content_based_recommend(user_id, product_id) do
-    with {:ok, res} <- Eshop.Recommender.ContentBasedRecommend.product_ids(user_id, product_id),
+  def content_based_recommend(user_id, product_id, limit) do
+    with {:ok, res} <-
+           Eshop.Recommender.ContentBasedRecommend.product_ids(user_id, product_id, limit),
          product_ids <- res.body do
       from(
         p in Product,
@@ -42,8 +43,9 @@ defmodule Eshop.Ecom do
     end
   end
 
-  def collaborative_recommend(user_id, product_id) do
-    with {:ok, res} <- Eshop.Recommender.CollaborativeRecommend.product_ids(user_id, product_id),
+  def collaborative_recommend(user_id, product_id, limit) do
+    with {:ok, res} <-
+           Eshop.Recommender.CollaborativeRecommend.product_ids(user_id, product_id, limit),
          product_ids <- res.body do
       from(
         p in Product,

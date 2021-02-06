@@ -49,6 +49,9 @@ defmodule EshopWeb.Router do
 
     delete("/reviews/:id", Rating.ReviewController, :delete)
     get("/reviews", Rating.ReviewController, :admin_index)
+
+    get("/setting", Settings.SettingController, :show)
+    put("/setting", Settings.SettingController, :update)
   end
 
   scope "/api", EshopWeb do
