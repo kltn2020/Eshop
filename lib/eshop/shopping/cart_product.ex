@@ -4,6 +4,7 @@ defmodule Eshop.Shopping.CartProduct do
 
   schema "cart_products" do
     field :quantity, :integer
+    field :active, :boolean
 
     timestamps()
 

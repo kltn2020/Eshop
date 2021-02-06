@@ -51,6 +51,11 @@ defmodule Eshop.Shopping do
   end
 
   def clear_my_cart(cart_id) do
-    from(cp in CartProduct, where: cp.cart_id == ^cart_id) |> Repo.delete_all()
+    from(
+      cp in CartProduct,
+      where: cp.cart_id == ^cart_id,
+      where: cp.active == true
+    )
+    |> Repo.delete_all()
   end
 end

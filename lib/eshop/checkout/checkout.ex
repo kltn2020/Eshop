@@ -97,6 +97,7 @@ defmodule Eshop.Checkout do
     lines =
       from(
         cp in Eshop.Shopping.CartProduct,
+        where: cp.active == true,
         where: cp.cart_id == ^cart_id,
         join: p in Eshop.Ecom.Product,
         on: cp.product_id == p.id,
