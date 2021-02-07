@@ -5,7 +5,9 @@ defmodule EshopWeb.Auth.UserRegistration do
   alias EshopWeb.ErrorHelpers
 
   def register(conn, user_registration_command) do
-    with {:ok, _user, conn} <- conn |> Pow.Plug.create_user(user_registration_command) do
+    with {:ok, user, conn} <- conn |> Pow.Plug.create_user(user_registration_command) do
+      EshopWeb.VerifyUserEmail.perform(%{"user_id" => user.id})
+
       json(conn, %{status: "OK"})
     else
       {:error, changeset, conn} ->
