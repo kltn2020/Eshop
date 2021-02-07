@@ -5,6 +5,5 @@ defmodule Eshop.Repo.Migrations.AddActiveToOrderLine do
     alter table(:cart_products) do
       add :active, :boolean, default: true
     end
-
   end
 end

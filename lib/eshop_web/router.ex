@@ -23,6 +23,7 @@ defmodule EshopWeb.Router do
 
     post "/register", Auth.UserRegistration, :register
     post "/login", Auth.UserLogin, :login
+    post "/confirm", Auth.UserConfirm, :confirm
   end
 
   scope "/api/admin", EshopWeb do

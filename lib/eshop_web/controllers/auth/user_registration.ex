@@ -6,7 +6,7 @@ defmodule EshopWeb.Auth.UserRegistration do
 
   def register(conn, user_registration_command) do
     with {:ok, _user, conn} <- conn |> Pow.Plug.create_user(user_registration_command) do
-      json(conn, %{token: conn.private[:api_access_token]})
+      json(conn, %{status: "OK"})
     else
       {:error, changeset, conn} ->
         errors = Changeset.traverse_errors(changeset, &ErrorHelpers.translate_error/1)

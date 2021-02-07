@@ -54,7 +54,8 @@ defmodule Eshop.MixProject do
       {:plug, "~> 1.0"},
       {:corsica, "~> 1.0"},
       {:elasticsearch, "~> 1.0.0"},
-      {:tesla, "~> 1.4.0"}
+      {:tesla, "~> 1.4.0"},
+      {:nanoid, "~> 2.0.5"}
     ]
   end
 
