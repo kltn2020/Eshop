@@ -55,4 +55,8 @@ config :eshop, Eshop.ES.Cluster,
     }
   }
 
+config :eshop, EshopWeb.Mailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: {:system, "SENDGRID_API_KEY"}
+
 import_config "#{Mix.env()}.exs"

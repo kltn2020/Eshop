@@ -4,6 +4,7 @@ defmodule Eshop.Settings.GeneralSetting do
 
   schema "general_settings" do
     field :limit, :integer
+    field :sender_email, :string
 
     timestamps()
   end
