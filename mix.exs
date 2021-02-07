@@ -56,7 +56,8 @@ defmodule Eshop.MixProject do
       {:elasticsearch, "~> 1.0.0"},
       {:tesla, "~> 1.4.0"},
       {:nanoid, "~> 2.0.5"},
-      {:bamboo, "~> 1.7.0"}
+      {:bamboo, "~> 1.7.0"},
+      {:httpoison, "~> 1.8"}
     ]
   end
 

@@ -8,8 +8,8 @@ defmodule EshopWeb.Uploader do
       {:ok, image_url} ->
         conn |> json(%{status: "OK", data: image_url})
 
-      err ->
-        conn |> json(%{status: "ERROR", data: err})
+      {:error, message} ->
+        conn |> json(%{status: "ERROR", data: message})
     end
   end
 end
