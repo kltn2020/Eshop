@@ -5,10 +5,15 @@ defmodule Eshop.Tools.ImageTransfer do
   alias Eshop.Utils.CloudinaryUploader
   import Ecto.Query, warn: false
 
+  require Logger
+
   @spec perform :: list
   def perform do
-    Repo.all(Product)
+    from(p in Product, order_by: p.id)
+    |> Repo.all()
     |> Enum.map(fn product ->
+      Logger.info("Excute product id #{product.id}")
+
       new_images =
         product.images
         |> Enum.map(fn image ->
@@ -17,7 +22,9 @@ defmodule Eshop.Tools.ImageTransfer do
                {:ok, image_url} <- CloudinaryUploader.upload(file_path) do
             %{"url" => image_url}
           else
-            _ -> ""
+            err ->
+              Logger.info(inspect(err))
+              image["url"]
           end
         end)
 
@@ -26,13 +33,16 @@ defmodule Eshop.Tools.ImageTransfer do
   end
 
   defp download_image(url) do
-    %HTTPoison.Response{body: body} = HTTPoison.get!(url)
+    with {:ok, %HTTPoison.Response{body: body}} <- HTTPoison.get(url),
+         file_path <- "/tmp/#{url |> String.split("/") |> Enum.at(-1)}",
+         :ok <- File.write(file_path, body) do
+      {:ok, file_path}
+    else
+      {:error, message} ->
+        {:error, message}
 
-    file_path = "/tmp/#{url |> String.split("/") |> Enum.at(-1)}"
-
-    case File.write(file_path, body) do
-      :ok -> {:ok, file_path}
-      _ -> {:error, :download_image}
+      _ ->
+        {:error, :download_image}
     end
   end
 end
