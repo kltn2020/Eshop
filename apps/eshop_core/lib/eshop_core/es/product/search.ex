@@ -23,7 +23,7 @@ defmodule EshopCore.ES.Product.Search do
   defp filter_query(nil), do: %{"match_all" => %{}}
 
   defp filter_query(params) do
-    if Map.get(params, "search_terms") in [nil, ""] do
+    if params.search_terms in [nil, ""] do
       filter_query(nil)
     else
       %{
@@ -43,7 +43,7 @@ defmodule EshopCore.ES.Product.Search do
   defp query_product_name(query, params) do
     [
       %{
-        "match" => %{"name" => params["search_terms"]}
+        "match" => %{"name" => params.search_terms}
       }
     ] ++ query
   end
@@ -51,7 +51,7 @@ defmodule EshopCore.ES.Product.Search do
   defp query_brand_name(query, params) do
     [
       %{
-        "match" => %{"brand" => params["search_terms"]}
+        "match" => %{"brand" => params.search_terms}
       }
     ] ++ query
   end

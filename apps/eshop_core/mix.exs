@@ -60,7 +60,9 @@ defmodule EshopCore.MixProject do
       {:tesla, "~> 1.4.0"},
       {:nanoid, "~> 2.0.5"},
       {:bamboo, "~> 1.7.0"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:querie, github: "onpointvn/querie", branch: "v1"},
+      {:tarams, github: "onpointvn/tarams", tag: "0.2.0"}
     ]
   end
 

@@ -6,15 +6,31 @@ defmodule EshopClientWeb.Ecom.ProductController do
 
   action_fallback EshopClientWeb.FallbackController
 
+  @schema %{
+    size: [type: :integer, validate: {:inclusion, [20, 50, 100]}, default: 20],
+    page: [type: :integer, default: 1],
+    brand_ids: [
+      type: {:array, :integer},
+      cast_func: &EshopCore.EctoHelpers.cast_array_integer/1
+    ],
+    category_ids: [
+      type: {:array, :integer},
+      cast_func: &EshopCore.EctoHelpers.cast_array_integer/1
+    ],
+    search_terms: :string
+  }
+
   def index(conn, params) do
-    paging = Ecom.list_products_with_paging(params)
+    with {:ok, data} <- Tarams.parse(@schema, params) do
+      paging = Ecom.list_products_with_paging(data)
 
-    entries =
-      paging.entries
-      |> EshopCore.Repo.preload([:category, :brand])
-      |> EshopCore.Utils.StructHelper.to_map()
+      entries =
+        paging.entries
+        |> EshopCore.Repo.preload([:category, :brand])
+        |> EshopCore.Utils.StructHelper.to_map()
 
-    conn |> json(%{status: "OK", data: %{paging | entries: entries}})
+      conn |> json(%{status: "OK", data: %{paging | entries: entries}})
+    end
   end
 
   def content_based_recommend(conn, %{"product_id" => product_id}) do
