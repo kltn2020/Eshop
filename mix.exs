@@ -8,7 +8,7 @@ defmodule Eshop.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       releases: [
-        client: [
+        backend: [
           applications: [
             eshop_client: :permanent
           ]
