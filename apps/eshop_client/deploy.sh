@@ -18,4 +18,4 @@ docker run -d --name eshop-backend \
   -e REDIS_URL=redis://10.148.0.13:6380 \
   -e PORT=4000 \
   -p 4000:4000 \
-  ${DOCKER_IMAGE}$APP:$TAGG
+  ${DOCKER_IMAGE}$APP:$TAG
