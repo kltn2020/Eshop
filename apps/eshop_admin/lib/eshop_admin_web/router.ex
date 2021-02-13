@@ -11,7 +11,7 @@ defmodule EshopAdminWeb.Router do
 
   pipeline :api_protected do
     plug Pow.Plug.RequireAuthenticated,
-      error_handler: EshopClientWeb.AuthErrorHandler
+      error_handler: EshopAdminWeb.AuthErrorHandler
   end
 
   pipeline :admin_protected do
@@ -41,7 +41,7 @@ defmodule EshopAdminWeb.Router do
     get("/orders/:id", Checkout.OrderController, :show)
 
     delete("/reviews/:id", Rating.ReviewController, :delete)
-    get("/reviews", Rating.ReviewController, :admin_index)
+    get("/reviews", Rating.ReviewController, :index)
 
     get("/setting", Settings.SettingController, :show)
     put("/setting", Settings.SettingController, :update)
