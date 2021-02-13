@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# docker rm -f eshop-backend
+docker stop eshop-backend || true && docker rm - eshop-backend || true
 
 docker run -d --name eshop-backend \
   --network my-net \
