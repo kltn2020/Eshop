@@ -1,0 +1,32 @@
+pipeline{
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'eshop_base'
+    }
+
+    options {
+        ansiColor('xterm')
+    }
+
+
+    stages{
+        stage("Copy files"){
+            steps {
+                sh '''#!/bin/bash
+                    cp apps/eshop_core/Dockerfile .
+                '''
+            }
+        }
+
+        stage("build image docker"){
+            steps {
+                echo '****** Build and tag image ******'
+
+                script {
+                    docker.build DOCKER_IMAGE + ":latest"
+                }
+            }
+        }
+    }
+}

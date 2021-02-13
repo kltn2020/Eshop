@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     environment {
-        DOCKER_IMAGE = 'eshop-backend'
+        DOCKER_IMAGE = 'eshop-'
         TAG = "${GIT_BRANCH.split("/")[1]}-${GIT_COMMIT.substring(0, 6)}-${BUILD_NUMBER}"
     }
 
@@ -10,12 +10,25 @@ pipeline{
         ansiColor('xterm')
     }
 
+
+    parameters {
+      choice(name: 'APP', choices: ['client', 'worker'], description: 'Select App')
+    }
+
+
     stages{
+        stage("Copy files"){
+            steps {
+                sh './copy_files.sh'
+            }
+        }
+
         stage("build image docker"){
             steps {
                 echo '****** Build and tag image ******'
+
                 script {
-                    docker.build DOCKER_IMAGE + ":$TAG"
+                    docker.build DOCKER_IMAGE + "$APP" + ":$TAG"
                 }
             }
         }
@@ -24,7 +37,7 @@ pipeline{
             steps {
                 echo '****** Deploy image ******'
 
-                sh './jenkins/deploy.sh'
+                sh './deploy.sh'
             }
         }
     }

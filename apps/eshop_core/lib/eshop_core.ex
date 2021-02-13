@@ -1,0 +1,2 @@
+defmodule EshopCore do
+end
