@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker rm -f eshop-backend
+# docker rm -f eshop-backend
 
 docker run -d --name eshop-backend \
   --network my-net \
