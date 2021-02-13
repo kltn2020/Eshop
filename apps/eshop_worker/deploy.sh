@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker stop eshop-worker || true && docker rm - eshop-worker || true
+docker stop eshop-worker || true && docker rm eshop-worker || true
 
 docker run -d --name eshop-worker \
   --network my-net \
