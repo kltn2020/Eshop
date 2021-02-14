@@ -18,8 +18,8 @@ defmodule EshopCore.Ecom.ProductQuery do
 
   def by_brand(query, nil), do: query
 
-  def by_brand(query, brand_ids) do
-    with_filter(query, %{brand_id: brand_ids})
+  def by_brand(query, brand_id) do
+    with_filter(query, %{brand_id: brand_id})
   end
 
   def by_category(query, nil), do: query

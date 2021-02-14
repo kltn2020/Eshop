@@ -66,6 +66,7 @@ defmodule EshopClientWeb do
 
       import EshopClientWeb.ErrorHelpers
       alias EshopClientWeb.Router.Helpers, as: Routes
+      use EshopClientWeb.JsonView
     end
   end
 
