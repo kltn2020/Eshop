@@ -48,8 +48,7 @@ defmodule EshopClientWeb.Ecom.ProductView do
       )
 
     %{
-      data: data,
-      status: "OK"
+      data: data
     }
   end
 
@@ -59,8 +58,7 @@ defmodule EshopClientWeb.Ecom.ProductView do
 
   def render("show.json", %{product: product}) do
     %{
-      data: render_one(product, __MODULE__, "product.json"),
-      status: "OK"
+      data: render_one(product, __MODULE__, "product.json")
     }
   end
 end

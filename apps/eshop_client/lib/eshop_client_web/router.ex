@@ -33,6 +33,8 @@ defmodule EshopClientWeb.Router do
     put("/shopping/:product_id/toggle", Shopping.CartController, :toggle_cart_product)
 
     get("/vouchers/check/:code", Checkout.VoucherController, :check)
+    get("/vouchers", Checkout.VoucherController, :index)
+
     get("/address", Checkout.AddressController, :index)
     post("/address", Checkout.AddressController, :create)
     put("/address/:id", Checkout.AddressController, :update)
@@ -54,8 +56,6 @@ defmodule EshopClientWeb.Router do
     get("/products/collaborative_recommend", Ecom.ProductController, :collaborative_recommend)
     get("/products/:id", Ecom.ProductController, :show)
     get("/products/:product_id/reviews", Rating.ReviewController, :index)
-
-    get("/vouchers", Checkout.VoucherController, :index)
   end
 
   forward("/api/admin", EshopAdminWeb.Router)

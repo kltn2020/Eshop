@@ -8,19 +8,18 @@ defmodule EshopClientWeb.Checkout.VoucherController do
 
   def index(conn, params) do
     role = conn.private[:role]
-    paging = VoucherRepo.list_voucher_with_paging(params, role)
+    paginate = VoucherRepo.list_voucher_with_paging(params, role)
 
     entries =
-      paging.entries
+      paginate.entries
       |> EshopCore.Repo.preload([:category])
-      |> EshopCore.Utils.StructHelper.to_map()
 
-    conn |> json(%{status: "OK", data: %{paging | entries: entries}})
+    render(conn, "index.json", vouchers: entries, paginate: paginate)
   end
 
   def check(conn, %{"code" => code}) do
-    voucher = Checkout.get_voucher_by(%{code: code}) |> EshopCore.Utils.StructHelper.to_map()
+    voucher = Checkout.get_voucher_by(%{code: code})
 
-    conn |> json(%{status: "OK", data: voucher})
+    render(conn, "show.json", voucher: voucher)
   end
 end
