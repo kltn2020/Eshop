@@ -46,6 +46,7 @@ defmodule EshopClientWeb.Ecom.ProductController do
     EshopCore.Tracking.create_user_view_product(%{product_id: id, user_id: user_id})
 
     [preload_product | _] = Ecom.load_product_data([product])
+
     render(conn, "show.json", product: preload_product)
   end
 end
