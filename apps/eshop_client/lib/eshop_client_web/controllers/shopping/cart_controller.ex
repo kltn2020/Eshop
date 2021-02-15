@@ -27,12 +27,12 @@ defmodule EshopClientWeb.Shopping.CartController do
     conn |> json(%{status: "OK"})
   end
 
-  def update_quantity(conn, %{"product_id" => product_id} = params) do
+  def update_quantity(conn, %{"product_id" => product_id, "quantity" => quantity}) do
     user_id = conn.private[:user_id]
 
     cart = Shopping.find_cart(user_id)
 
-    Shopping.update_quantity_cart(cart.id, product_id, params)
+    Shopping.update_quantity_cart(cart.id, product_id, quantity)
 
     conn |> json(%{status: "OK"})
   end

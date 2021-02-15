@@ -25,7 +25,15 @@ defmodule EshopCore.Shopping do
   end
 
   def find_cart_product(cart_id, product_id) do
-    Repo.get_by(CartProduct, %{cart_id: cart_id, product_id: product_id})
+    cart_product = Repo.get_by(CartProduct, %{cart_id: cart_id, product_id: product_id})
+
+    with true <- is_nil(cart_product),
+         {:ok, cart_product} <- create_cart_product(cart_id, product_id, 1) do
+      cart_product
+    else
+      false ->
+        cart_product
+    end
   end
 
   def delete_cart_product(%CartProduct{} = cart_product) do
@@ -45,13 +53,14 @@ defmodule EshopCore.Shopping do
     end
   end
 
-  def update_quantity_cart(cart_id, product_id, attrs) do
-    from(cp in CartProduct, where: cp.product_id == ^product_id and cp.cart_id == ^cart_id)
-    |> Repo.delete_all()
+  def update_quantity_cart(cart_id, product_id, quantity) do
+    cart_product = find_cart_product(cart_id, product_id)
 
-    quantity = attrs["quantity"]
-
-    quantity > 0 && create_cart_product(cart_id, product_id, quantity)
+    if quantity == 0 do
+      delete_cart_product(cart_product)
+    else
+      update_cart_product(cart_product, %{quantity: quantity})
+    end
   end
 
   def clear_my_cart(cart_id) do
