@@ -3,6 +3,11 @@ defmodule EshopClientWeb.Checkout.VoucherController do
 
   alias EshopCore.Checkout
   alias EshopCore.Checkout.VoucherRepo
+  alias EshopCore.Repo
+
+  @default_preload [
+    :category
+  ]
 
   action_fallback EshopClientWeb.FallbackController
 
@@ -12,14 +17,16 @@ defmodule EshopClientWeb.Checkout.VoucherController do
 
     entries =
       paginate.entries
-      |> EshopCore.Repo.preload([:category])
+      |> Repo.preload(@default_preload)
 
     render(conn, "index.json", vouchers: entries, paginate: paginate)
   end
 
   def check(conn, %{"code" => code}) do
-    voucher = Checkout.get_voucher_by(%{code: code})
-
-    render(conn, "show.json", voucher: voucher)
+    with voucher <- Checkout.get_voucher_by(%{code: code}),
+         false <- is_nil(voucher),
+         voucher <- Repo.preload(voucher, @default_preload) do
+      render(conn, "show.json", voucher: voucher)
+    end
   end
 end
