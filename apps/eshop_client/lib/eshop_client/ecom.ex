@@ -39,7 +39,7 @@ defmodule EshopClient.Ecom do
       paginate =
         ProductQuery.query()
         |> ProductQuery.by_product_ids(product_ids)
-        |> EshopCore.Utils.Paginator.new(Repo, %{})
+        |> EshopCore.Utils.Paginator.new(Repo, %{size: limit})
 
       entries =
         paginate.entries
@@ -54,7 +54,7 @@ defmodule EshopClient.Ecom do
       paginate =
         ProductQuery.query()
         |> ProductQuery.by_product_ids(product_ids)
-        |> EshopCore.Utils.Paginator.new(Repo, %{})
+        |> EshopCore.Utils.Paginator.new(Repo, %{size: limit})
 
       entries =
         paginate.entries
