@@ -7,7 +7,9 @@ defmodule EshopClientWeb.Shopping.CartView do
 
   @custom_fields []
 
-  @relationships []
+  @relationships [
+    items: EshopClientWeb.Shopping.CartProductView
+  ]
 
   def render("cart.json", %{cart: cart}) do
     %{
