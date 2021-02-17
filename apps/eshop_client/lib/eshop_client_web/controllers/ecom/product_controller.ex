@@ -30,10 +30,10 @@ defmodule EshopClientWeb.Ecom.ProductController do
     render(conn, "index.json", products: entries, paginate: paginate)
   end
 
-  def collaborative_recommend(conn, %{"product_id" => product_id}) do
+  def collaborative_recommend(conn, _params) do
     user_id = conn.private[:user_id]
     setting = Settings.get_setting()
-    {entries, paginate} = Ecom.collaborative_recommend(user_id, product_id, setting.limit)
+    {entries, paginate} = Ecom.collaborative_recommend(user_id, setting.limit)
 
     render(conn, "index.json", products: entries, paginate: paginate)
   end

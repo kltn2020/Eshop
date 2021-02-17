@@ -5,14 +5,14 @@ defmodule EshopCore.Recommender.CollaborativeRecommend do
   plug Tesla.Middleware.JSON
   plug Tesla.Middleware.Logger
 
-  def perform(user_id, product_id, limit) do
-    with {:ok, res} <- fetch_product_ids(user_id, product_id, limit),
+  def perform(user_id, limit) do
+    with {:ok, res} <- fetch_product_ids(user_id, limit),
          ids <- res.body do
       {:ok, ids}
     end
   end
 
-  def fetch_product_ids(user_id, product_id, limit) do
-    get("/collaborative_recommend?user_id=#{user_id}&product_id=#{product_id}&limit=#{limit}")
+  def fetch_product_ids(user_id, limit) do
+    get("/collaborative_recommend?user_id=#{user_id}&limit=#{limit}")
   end
 end

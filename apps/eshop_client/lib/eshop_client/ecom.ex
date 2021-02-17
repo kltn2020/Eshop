@@ -49,8 +49,8 @@ defmodule EshopClient.Ecom do
     end
   end
 
-  def collaborative_recommend(user_id, product_id, limit) do
-    with {:ok, product_ids} <- CollaborativeRecommend.perform(user_id, product_id, limit) do
+  def collaborative_recommend(user_id, limit) do
+    with {:ok, product_ids} <- CollaborativeRecommend.perform(user_id, limit) do
       paginate =
         ProductQuery.query()
         |> ProductQuery.by_product_ids(product_ids)
