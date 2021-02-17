@@ -46,6 +46,7 @@ defmodule EshopClientWeb.Router do
     get("/orders/:id", Checkout.OrderController, :show)
 
     post("/products/:product_id/like", Ecom.FavoriteController, :create)
+    get("/products/:product_id/like", Ecom.FavoriteController, :show)
     delete("/products/:product_id/like", Ecom.FavoriteController, :delete)
     get("/products/like", Ecom.FavoriteController, :index)
     post("/products/:product_id/reviews", Rating.ReviewController, :create)

@@ -59,4 +59,13 @@ defmodule EshopCore.Ecom do
     from(f in Favorite, where: f.user_id == ^user_id and f.product_id == ^product_id)
     |> Repo.delete_all()
   end
+
+  def find_favourite(user_id, product_id) do
+    from(
+      f in Favorite,
+      where: f.user_id == ^user_id and f.product_id == ^product_id,
+      limit: 1
+    )
+    |> Repo.one()
+  end
 end

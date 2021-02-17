@@ -39,6 +39,20 @@ defmodule EshopClientWeb.Ecom.FavoriteController do
     end
   end
 
+  def show(conn, %{"product_id" => product_id}) do
+    user_id = conn.private[:user_id]
+
+    case Ecom.find_favourite(user_id, product_id) do
+      nil ->
+        conn
+        |> put_status(:bad_request)
+        |> json(%{status: "you didn't like this product"})
+
+      _ ->
+        conn |> json(%{status: "OK"})
+    end
+  end
+
   def delete(conn, %{"product_id" => product_id}) do
     user_id = conn.private[:user_id]
 
