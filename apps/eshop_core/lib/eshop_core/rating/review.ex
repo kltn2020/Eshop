@@ -22,7 +22,8 @@ defmodule EshopCore.Rating.Review do
 
   @required_fields [
     :user_id,
-    :product_id
+    :product_id,
+    :point
   ]
 
   @doc false
@@ -30,5 +31,6 @@ defmodule EshopCore.Rating.Review do
     review
     |> cast(attrs, __MODULE__.__schema__(:fields) -- @default_fields)
     |> validate_required(@required_fields)
+    |> validate_number(:point, less_than_or_equal_to: 5, greater_than_or_equal_to: 1)
   end
 end
