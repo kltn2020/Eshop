@@ -10,9 +10,11 @@ defmodule EshopCore.Recommender.CollaborativeRecommend do
   def perform(user_id, limit) do
     with {:ok, res} <- fetch_product_ids(user_id, limit),
          ids <- res.body do
-      Logger.info(ids, label: "CollaborativeRecommend")
+      Logger.info(inspect(ids), label: "CollaborativeRecommend")
 
       {:ok, ids}
+    else
+      err -> Logger.error(inspect(err))
     end
   end
 
