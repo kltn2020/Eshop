@@ -1,24 +1,18 @@
 defmodule EshopCore.Recommender.ContentBasedRecommend do
+  use Tesla
+
+  plug Tesla.Middleware.BaseUrl, System.get_env("RECOMMENDER_HOST")
+  plug Tesla.Middleware.JSON
+  plug Tesla.Middleware.Logger
+
   def perform(user_id, product_id, limit) do
-    with {:ok, %{body: body}} <- fetch_product_ids(user_id, product_id, limit) do
-      {:ok, body}
+    with {:ok, res} <- fetch_product_ids(user_id, product_id, limit),
+         ids <- res.body do
+      {:ok, ids}
     end
   end
 
   def fetch_product_ids(user_id, product_id, limit) do
-    api_client()
-    |> Tesla.get(
-      "/content_based_recommend?user_id=#{user_id}&product_id=#{product_id}&limit=#{limit}"
-    )
-  end
-
-  defp api_client() do
-    middleware = [
-      {Tesla.Middleware.BaseUrl, System.get_env("RECOMMENDER_HOST")},
-      Tesla.Middleware.JSON,
-      Tesla.Middleware.Logger
-    ]
-
-    Tesla.client(middleware)
+    get("/content_based_recommend?user_id=#{user_id}&product_id=#{product_id}&limit=#{limit}")
   end
 end
