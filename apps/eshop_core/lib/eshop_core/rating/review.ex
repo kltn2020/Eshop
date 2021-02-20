@@ -1,6 +1,5 @@
 defmodule EshopCore.Rating.Review do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "reviews" do
     field :content, :string

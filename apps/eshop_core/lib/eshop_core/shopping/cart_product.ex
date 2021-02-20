@@ -1,6 +1,5 @@
 defmodule EshopCore.Shopping.CartProduct do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "cart_products" do
     field :quantity, :integer

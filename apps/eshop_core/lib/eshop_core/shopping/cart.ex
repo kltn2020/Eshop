@@ -1,6 +1,5 @@
 defmodule EshopCore.Shopping.Cart do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "carts" do
     timestamps()

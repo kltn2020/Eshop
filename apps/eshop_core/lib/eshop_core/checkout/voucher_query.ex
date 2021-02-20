@@ -1,6 +1,5 @@
 defmodule EshopCore.Checkout.VoucherQuery do
-  import Ecto.Query
-  alias EshopCore.Checkout.Voucher
+  use EshopCore, :query
 
   def query do
     Voucher

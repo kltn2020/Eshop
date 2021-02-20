@@ -1,6 +1,5 @@
 defmodule EshopCore.Rating do
-  import Ecto.Query, warn: false
-  alias EshopCore.Repo
+  use EshopCore, :domain
 
   alias EshopCore.Rating.Review
   alias EshopCore.Rating.Reply

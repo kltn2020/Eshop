@@ -1,5 +1,6 @@
 defmodule EshopCore.Checkout.VoucherRepo do
-  alias EshopCore.Repo
+  use EshopCore, :repository
+
   alias EshopCore.Checkout.VoucherQuery
 
   def list_voucher_with_paging(params, "admin") do

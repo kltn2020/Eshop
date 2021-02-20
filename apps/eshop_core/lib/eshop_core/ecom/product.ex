@@ -1,6 +1,5 @@
 defmodule EshopCore.Ecom.Product do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "products" do
     field :battery_capacity, :string

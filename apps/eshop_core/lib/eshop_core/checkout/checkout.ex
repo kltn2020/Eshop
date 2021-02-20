@@ -1,6 +1,5 @@
 defmodule EshopCore.Checkout do
-  import Ecto.Query, warn: false
-  alias EshopCore.Repo
+  use EshopCore, :domain
 
   alias EshopCore.Checkout.Voucher
   alias EshopCore.Checkout.Address

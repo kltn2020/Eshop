@@ -3,8 +3,7 @@ defmodule EshopCore.Tracking do
   The Tracking context.
   """
 
-  import Ecto.Query, warn: false
-  alias EshopCore.Repo
+  use EshopCore, :domain
 
   alias EshopCore.Tracking.UserViewProduct
 

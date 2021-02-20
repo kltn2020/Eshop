@@ -1,6 +1,5 @@
 defmodule EshopCore.Checkout.OrderLine do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "order_lines" do
     field :quantity, :integer

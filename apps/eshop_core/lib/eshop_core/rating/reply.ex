@@ -1,6 +1,5 @@
 defmodule EshopCore.Rating.Reply do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "replies" do
     field :content, :string

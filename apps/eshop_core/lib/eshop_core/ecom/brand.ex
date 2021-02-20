@@ -1,5 +1,5 @@
 defmodule EshopCore.Ecom.Brand do
-  use Ecto.Schema
+  use EshopCore, :model
 
   schema "brands" do
     field :name, :string

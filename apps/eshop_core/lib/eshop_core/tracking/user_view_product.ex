@@ -1,6 +1,5 @@
 defmodule EshopCore.Tracking.UserViewProduct do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "user_view_products" do
     field :view_at, :naive_datetime

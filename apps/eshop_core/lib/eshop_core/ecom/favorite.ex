@@ -1,6 +1,5 @@
 defmodule EshopCore.Ecom.Favorite do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "favorites" do
     timestamps()

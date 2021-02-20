@@ -1,7 +1,6 @@
 defmodule EshopCore.Identity.User do
-  use Ecto.Schema
+  use EshopCore, :model
   use Pow.Ecto.Schema
-  import Ecto.Changeset
 
   schema "users" do
     field :role, :string

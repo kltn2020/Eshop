@@ -1,5 +1,5 @@
 defmodule EshopCore.Ecom.Category do
-  use Ecto.Schema
+  use EshopCore, :model
 
   schema "categories" do
     field :name, :string

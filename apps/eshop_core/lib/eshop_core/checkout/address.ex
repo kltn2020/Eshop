@@ -1,6 +1,5 @@
 defmodule EshopCore.Checkout.Address do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "addresses" do
     field :is_primary, :boolean, default: false

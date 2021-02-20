@@ -14,8 +14,7 @@ defmodule EshopCore.Checkout.OrderStatus do
 end
 
 defmodule EshopCore.Checkout.Order do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "orders" do
     field :discount, :integer

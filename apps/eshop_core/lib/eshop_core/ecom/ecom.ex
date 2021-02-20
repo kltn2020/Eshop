@@ -1,8 +1,10 @@
 defmodule EshopCore.Ecom do
-  import Ecto.Query, warn: false
-  alias EshopCore.Repo
+  use EshopCore, :domain
 
-  alias EshopCore.Ecom.{Category, Brand, Product, Favorite}
+  alias EshopCore.Ecom.Category
+  alias EshopCore.Ecom.Brand
+  alias EshopCore.Ecom.Product
+  alias EshopCore.Ecom.Favorite
 
   def list_categories do
     Repo.all(Category)

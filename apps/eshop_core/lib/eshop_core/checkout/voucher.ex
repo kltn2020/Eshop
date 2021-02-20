@@ -1,6 +1,5 @@
 defmodule EshopCore.Checkout.Voucher do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use EshopCore, :model
 
   schema "vouchers" do
     field :code, :string

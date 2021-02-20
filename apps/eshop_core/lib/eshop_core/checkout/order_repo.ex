@@ -1,6 +1,6 @@
 defmodule EshopCore.Checkout.OrderRepo do
-  import Ecto.Query, warn: false
-  alias EshopCore.Repo
+  use EshopCore, :repository
+
   alias EshopCore.Checkout.Order
   alias EshopCore.Checkout
 
@@ -35,7 +35,7 @@ defmodule EshopCore.Checkout.OrderRepo do
     end)
   end
 
-  defp calcu_discount(_, nil, _), do: 0
+  defp calcu_discount(_, nil, _), do: 1
 
   defp calcu_discount(line, voucher, price) do
     if line[:category_id] == voucher.category_id do
