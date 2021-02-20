@@ -144,7 +144,9 @@ defmodule EshopCore.Checkout do
       |> Map.put("discount", discount)
       |> Map.put("voucher_id", voucher_id)
 
-    update_voucher(voucher, %{is_used: true})
+    if voucher_id do
+      update_voucher(voucher, %{is_used: true})
+    end
 
     %Order{}
     |> Order.changeset(attrs)
