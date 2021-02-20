@@ -6,6 +6,8 @@ defmodule EshopCore.Checkout do
   alias EshopCore.Checkout.Address
   alias EshopCore.Checkout.Order
 
+  alias EshopCore.Checkout.OrderRepo
+
   def list_vouchers do
     Repo.all(Voucher)
   end
@@ -88,70 +90,8 @@ defmodule EshopCore.Checkout do
 
   def get_order!(id), do: Repo.get!(Order, id)
 
-  def create_order(cart_id, voucher_id, attrs \\ %{}) do
-    voucher =
-      if voucher_id do
-        EshopCore.Checkout.get_voucher!(voucher_id)
-      end
-
-    lines =
-      from(
-        cp in EshopCore.Shopping.CartProduct,
-        where: cp.active == true,
-        where: cp.cart_id == ^cart_id,
-        join: p in EshopCore.Ecom.Product,
-        on: cp.product_id == p.id,
-        select: %{
-          product_id: cp.product_id,
-          quantity: cp.quantity,
-          discount_price: p.discount_price,
-          category_id: p.category_id
-        }
-      )
-      |> Repo.all()
-      |> Enum.map(fn line ->
-        price = line[:quantity] * line[:discount_price]
-
-        discount =
-          with false <- is_nil(voucher),
-               true <- line[:category_id] == voucher.category_id do
-            (price * voucher.value / 100) |> trunc()
-          else
-            _ -> 0
-          end
-
-        Map.merge(line, %{
-          price: price,
-          discount: discount,
-          total: price - discount
-        })
-      end)
-
-    total =
-      lines
-      |> Enum.map(fn line -> line.total end)
-      |> Enum.sum()
-
-    discount =
-      lines
-      |> Enum.map(fn line -> line.discount end)
-      |> Enum.sum()
-
-    attrs =
-      attrs
-      |> Map.put("lines", lines)
-      |> Map.put("total", total)
-      |> Map.put("discount", discount)
-      |> Map.put("voucher_id", voucher_id)
-
-    if voucher_id do
-      update_voucher(voucher, %{is_used: true})
-    end
-
-    %Order{}
-    |> Order.changeset(attrs)
-    |> Repo.insert()
-  end
+  def create_order(cart_id, voucher, attrs \\ %{}),
+    do: OrderRepo.create_order(cart_id, voucher, attrs)
 
   def update_order(%Order{} = order, attrs) do
     order

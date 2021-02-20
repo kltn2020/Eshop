@@ -4,6 +4,7 @@ defmodule EshopClientWeb.Checkout.OrderController do
   alias EshopCore.Checkout
   alias EshopCore.Shopping
   alias EshopCore.Repo
+  alias EshopCore.Checkout.Voucher
 
   action_fallback EshopClientWeb.FallbackController
 
@@ -22,23 +23,37 @@ defmodule EshopClientWeb.Checkout.OrderController do
   end
 
   def create(conn, params) do
-    with user_id <- conn.private[:user_id],
-         cart <- Shopping.find_cart(user_id),
-         {:ok} <- check_cart(cart),
-         voucher_id <- get_voucher_id(params),
-         params <- Map.put(params, "user_id", user_id),
-         {:ok, order} <- Checkout.create_order(cart.id, voucher_id, params) do
-      Shopping.clear_my_cart(cart.id)
+    user_id = conn.private[:user_id]
+    params = Map.put(params, "user_id", user_id)
 
-      order =
-        order
-        |> EshopCore.Repo.preload(:voucher)
-        |> EshopCore.Utils.StructHelper.to_map()
+    with cart <- Shopping.find_cart(user_id),
+         {:ok} <- check_cart(cart),
+         {:ok, voucher} <- get_voucher(params),
+         {:ok, _order} <- Checkout.create_order(cart.id, voucher, params) do
+      Shopping.clear_my_cart(cart.id)
 
       conn
       |> put_status(:ok)
-      |> json(%{status: "OK", data: order})
+      |> json(%{status: "OK"})
     else
+      {:error, :code_not_found} ->
+        conn
+        |> put_status(:bad_request)
+        |> json(%{
+          status: "ERROR",
+          code: "CREATE_ERROR",
+          message: "VOUCHER NOT FOUND"
+        })
+
+      {:error, :is_used} ->
+        conn
+        |> put_status(:bad_request)
+        |> json(%{
+          status: "ERROR",
+          code: "CREATE_ERROR",
+          message: "VOUCHER IS USED"
+        })
+
       {:error, :cart_item} ->
         conn
         |> put_status(:bad_request)
@@ -48,17 +63,8 @@ defmodule EshopClientWeb.Checkout.OrderController do
           message: "Empty Cart"
         })
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        conn
-        |> put_status(:bad_request)
-        |> json(%{
-          status: "ERROR",
-          code: "VALIDATION_FAILED",
-          message:
-            changeset
-            |> EshopClientWeb.ChangesetView.translate_errors()
-            |> EshopCore.Utils.Validator.get_validation_error_message()
-        })
+      err ->
+        err
     end
   end
 
@@ -113,14 +119,23 @@ defmodule EshopClientWeb.Checkout.OrderController do
     end
   end
 
-  defp get_voucher_id(params) do
-    with code <- Map.get(params, "voucher_code"),
-         true <- code not in [nil, ""],
-         voucher <- Checkout.get_voucher_by(%{code: code}),
-         false <- is_nil(voucher) do
-      voucher.id
+  defp get_voucher(params) do
+    code = Map.get(params, "voucher_code")
+
+    with true <- code not in [nil, ""],
+         %Voucher{} = voucher <- Checkout.get_voucher_by(%{code: code}),
+         {:is_used, false} <- {:is_used, voucher.is_used} do
+      {:ok, voucher}
     else
-      _ -> nil
+      {:is_used, true} ->
+        {:error, :is_used}
+
+      nil ->
+        {:error, :code_not_found}
+
+      # not have code or can find code
+      _ ->
+        {:ok, nil}
     end
   end
 end

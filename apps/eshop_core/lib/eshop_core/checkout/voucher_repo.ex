@@ -10,8 +10,6 @@ defmodule EshopCore.Checkout.VoucherRepo do
   end
 
   def list_voucher_with_paging(params, _role) do
-    IO.inspect(">>>>>>>>>>>>>>>>")
-
     VoucherQuery.query()
     |> VoucherQuery.is_running()
     |> VoucherQuery.is_used(false)
